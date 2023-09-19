@@ -10,3 +10,4 @@ INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento)
 INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento) VALUES ('123.874.279-30', 'A124', 'Cicrana de tal', 'Cônjuge', to_date('1984-06-07', 'yyyy-mm-dd'));
 INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (9, 'A124', 8);
  
+select sigla, nome from brh.departamento order by nome;
