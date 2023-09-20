@@ -45,3 +45,7 @@ inner join
 dependente
 on Colaborador.matricula = Dependente.colaborador
 order by Colaborador.nome, Dependente.nome 
+
+--Remoção do Departamento SECAP
+delete from departamento where sigla='SECAP'
+
