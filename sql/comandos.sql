@@ -26,5 +26,8 @@ SELECT brh.colaborador.nome, brh.email_colaborador.email , brh.telefone_colabora
 FROM brh.colaborador, brh.email_colaborador, brh.telefone_colaborador
 WHERE brh.colaborador.matricula = brh.email_colaborador.colaborador AND brh.email_colaborador.tipo = 'T' AND brh.telefone_colaborador.tipo = 'M';
 
+SELECT brh.departamento.nome, brh.departamento.chefe, brh.colaborador.nome, brh.atribuicao.projeto, brh.atribuicao.papel, brh.telefone_colaborador.numero, brh.dependente.nome
+FROM brh.departamento, brh.colaborador, brh.atribuicao, brh.telefone_colaborador, brh.dependente
+WHERE brh.colaborador.matricula = brh.departamento.chefe AND brh.colaborador.matricula = brh.atribuicao.colaborador AND brh.colaborador.matricula = brh.telefone_colaborador.colaborador AND brh.colaborador.matricula = brh.dependente.colaborador
 
 
