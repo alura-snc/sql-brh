@@ -16,3 +16,11 @@ SELECT brh.colaborador.nome, brh.dependente.nome, brh.dependente.data_nascimento
 FROM brh.colaborador, brh.dependente
 WHERE brh.colaborador.matricula = brh.dependente.colaborador
 ORDER BY brh.colaborador.nome;
+
+DELETE FROM brh.departamento WHERE brh.departamento.sigla = 'SECAP';
+
+select * from brh.departamento;
+
+
+
+
