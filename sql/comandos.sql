@@ -22,5 +22,9 @@ DELETE FROM brh.departamento WHERE brh.departamento.sigla = 'SECAP';
 select * from brh.departamento;
 
 
+SELECT brh.colaborador.nome, brh.email_colaborador.email , brh.telefone_colaborador.numero
+FROM brh.colaborador, brh.email_colaborador, brh.telefone_colaborador
+WHERE brh.colaborador.matricula = brh.email_colaborador.colaborador AND brh.email_colaborador.tipo = 'T' AND brh.telefone_colaborador.tipo = 'M';
+
 
 
