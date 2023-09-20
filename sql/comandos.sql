@@ -11,3 +11,8 @@ INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento)
 INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (9, 'A124', 8);
  
 select sigla, nome from brh.departamento order by nome;
+
+SELECT brh.colaborador.nome, brh.dependente.nome, brh.dependente.data_nascimento, brh.dependente.parentesco
+FROM brh.colaborador, brh.dependente
+WHERE brh.colaborador.matricula = brh.dependente.colaborador
+ORDER BY brh.colaborador.nome;
