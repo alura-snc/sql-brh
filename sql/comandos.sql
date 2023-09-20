@@ -49,3 +49,15 @@ order by Colaborador.nome, Dependente.nome
 --Remoção do Departamento SECAP
 delete from departamento where sigla='SECAP'
 
+--Relatório de Contatos
+select 
+colaborador.nome,
+email_colaborador.email as "E-mail profissional",
+telefone_colaborador.numero as "Celular"
+from colaborador
+inner join email_colaborador
+on colaborador.matricula = email_colaborador.colaborador
+inner join telefone_colaborador
+on colaborador.matricula=telefone_colaborador.colaborador
+where email_colaborador.tipo = 'T' and telefone_colaborador.tipo='M'
+order by Colaborador.nome
