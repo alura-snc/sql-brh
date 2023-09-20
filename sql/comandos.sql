@@ -33,3 +33,15 @@ values ('11122',1,8);
 
 --Relatorio de Departamentos
 select sigla, nome from departamento
+
+--Relatorio de Dependentes
+select 
+Colaborador.nome,
+Dependente.nome,
+Dependente.data_nascimento,
+Dependente.parentesco
+from colaborador
+inner join
+dependente
+on Colaborador.matricula = Dependente.colaborador
+order by Colaborador.nome, Dependente.nome 
