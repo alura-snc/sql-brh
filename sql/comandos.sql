@@ -1,4 +1,4 @@
---Inserir novo colaborador
+--1 Inserir novo colaborador
 select * from papel 
 insert into PAPEL (id,nome)
 values (8,'Especialista de Negócios');
@@ -31,10 +31,10 @@ values('33333344455','Cicrana de Tal','23/07/1970','CÃ´njuge','11122');
 insert into atribuicao (colaborador,projeto,papel)
 values ('11122',1,8);
 
---Relatorio de Departamentos
+--2 Relatorio de Departamentos
 select sigla, nome from departamento
 
---Relatorio de Dependentes
+--3 Relatorio de Dependentes
 select 
 Colaborador.nome,
 Dependente.nome,
@@ -46,10 +46,10 @@ dependente
 on Colaborador.matricula = Dependente.colaborador
 order by Colaborador.nome, Dependente.nome 
 
---Remoção do Departamento SECAP
+--4 Remoção do Departamento SECAP
 delete from departamento where sigla='SECAP'
 
---Relatório de Contatos
+--5 Relatório de Contatos
 select 
 colaborador.nome,
 email_colaborador.email as "E-mail profissional",
@@ -61,3 +61,71 @@ inner join telefone_colaborador
 on colaborador.matricula=telefone_colaborador.colaborador
 where email_colaborador.tipo = 'T' and telefone_colaborador.tipo='M'
 order by Colaborador.nome
+
+
+--6 Relatório Analítico de Equipes
+select
+Departamento.nome,
+Departamento.chefe,
+Colaborador.nome,
+Projeto.nome,
+Papel.nome,
+telefone_colaborador.numero,
+Depentende.nome
+from Departamento inner join
+Colaborador
+on Departamento.chefe = Colaborador.matricula
+
+--7 DESAFIO Relatório analítico de equipes
+
+--Função para Retornar nome do Chefe do Departamento
+create or replace function RetornarNomeChefeDepto(siglaDepto in varchar2)
+return varchar2 
+as 
+    nomeChefe varchar2(255);
+begin
+    select
+    Colaborador.nome into nomeChefe
+    from Departamento inner join
+    Colaborador
+    on Departamento.chefe=Colaborador.matricula
+    where Departamento.sigla=siglaDepto;
+    return nomeChefe;
+end;
+
+-- Teste da Função para Retornar nome do Chefe do Departamento
+select RetornarNomeChefeDepto('DEREH') from DUAL;
+
+-- Relatório analítico de equipes
+select 
+Projeto.nome as "Nome do Projeto",
+Colaborador.nome as "Nome Colaborador",
+Dependente.nome as "Dependentes",
+Departamento.nome as "Nome Departamento",
+RetornarNomeChefeDepto(Departamento.sigla) as "Chefe do Departamento",
+Papel.nome as "Papel desempenhado",
+(select telefone_colaborador.numero from telefone_colaborador where tipo='R' and telefone_colaborador.colaborador = colaborador.matricula) as "Tel Residencial",
+(select telefone_colaborador.numero from telefone_colaborador where tipo='C' and telefone_colaborador.colaborador = colaborador.matricula) as "Tel Comercial",
+(select telefone_colaborador.numero from telefone_colaborador where tipo='M' and telefone_colaborador.colaborador = colaborador.matricula) as "Cel"
+from Colaborador inner join
+Departamento
+on Colaborador.Departamento = Departamento.sigla 
+inner join 
+Atribuicao
+on Colaborador.matricula = Atribuicao.colaborador
+inner join 
+Projeto
+on Atribuicao.projeto=Projeto.id
+inner join 
+Papel
+on Atribuicao.papel = Papel.id
+inner join 
+Dependente 
+on Colaborador.matricula=Dependente.Colaborador
+order by projeto.nome, colaborador.nome, dependente.nome
+
+
+
+
+
+
