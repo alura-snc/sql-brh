@@ -80,3 +80,12 @@ VALUES
 
 SELECT NOME, SIGLA FROM BRH.DEPARTAMENTO WHERE NOME >'A';
 
+// Consulta listando: nome do colaborador; nome do dependente; data de nascimento do dependente; parentesco do dependente.
+// Resultado ordenado pelo nome do colaborador e pelo nome do dependente.
+
+SELECT BRH.COLABORADOR.NOME, BRH.DEPENDENTE.NOME, BRH.DEPENDENTE.DATA_NASCIMENTO, BRH.DEPENDENTE.PARENTESCO
+FROM BRH.COLABORADOR
+FULL JOIN BRH.DEPENDENTE
+ON BRH.COLABORADOR.MATRICULA = BRH.DEPENDENTE.COLABORADOR
+WHERE BRH.COLABORADOR.NOME >'A' AND BRH.DEPENDENTE.NOME >'A';
+
