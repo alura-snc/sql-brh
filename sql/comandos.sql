@@ -43,4 +43,3 @@ INSERT INTO BRH.ATRIBUICAO (colaborador, projeto,papel)
 VALUES
 ('A124',9,8);
 
-SELECT * FROM BRH.ATRIBUICAO;
