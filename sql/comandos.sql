@@ -68,12 +68,14 @@ DELETE FROM BRH.COLABORADOR WHERE departamento = 'SECAP';
     
 DELETE FROM BRH.DEPARTAMENTO WHERE SIGLA = 'SECAP';
 
---Criando uma consulta que liste o nome do Colaborador, email de trabalho do Colaborador e telefone celular do Colaborador.
+--Criando uma consulta que liste o nome do Colaborador, email de trabalho do Colaborador e telefone celular do Colaborador, e ordenado pelo nome do colaborador.
 
 SELECT C.nome AS "NOME DO COLABORADOR", E.Email AS "EMAIL COORPORATIVO", T.numero
 AS "CELULAR" FROM BRH.COLABORADOR C 
 JOIN BRH.EMAIL_COLABORADOR E ON  E.COLABORADOR = C.MATRICULA AND E.TIPO = 'T'
-JOIN BRH.TELEFONE_COLABORADOR T ON T.COLABORADOR = C.MATRICULA AND T.TIPO = 'M';
+JOIN BRH.TELEFONE_COLABORADOR T ON T.COLABORADOR = C.MATRICULA AND T.TIPO = 'M'
+ORDER BY (C.NOME);
+
 
 
 
