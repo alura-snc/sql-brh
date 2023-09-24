@@ -43,3 +43,4 @@ INSERT INTO BRH.ATRIBUICAO (colaborador, projeto,papel)
 VALUES
 ('A124',9,8);
 
+SELECT sigla, nome as "NOME DO DEPARTAMENTO" FROM BRH.DEPARTAMENTO ORDER BY (nome);
