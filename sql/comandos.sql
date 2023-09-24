@@ -43,4 +43,12 @@ INSERT INTO BRH.ATRIBUICAO (colaborador, projeto,papel)
 VALUES
 ('A124',9,8);
 
+--Consulta da sigla e nome do departamento ordernando por nome do departamento
+
 SELECT sigla, nome as "NOME DO DEPARTAMENTO" FROM BRH.DEPARTAMENTO ORDER BY (nome);
+
+--Consulta do nome do colaborador, nome do dependente do colaborador, data de nacimento do dependente e parentesco
+
+SELECT C.nome AS "NOME DO COLABORADOR", D.nome AS "NOME DO DEPENDENTE",
+D.data_nascimento AS "DATA DE NASCIMENTO DO DEPENDENTE", D.parentesco  
+FROM BRH.COLABORADOR C JOIN BRH.DEPENDENTE D ON  D.COLABORADOR = C.MATRICULA;
