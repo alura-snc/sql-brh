@@ -115,3 +115,12 @@ DELETE FROM brh.colaborador WHERE departamento = 'SECAP';
 // Excluindo o departamento SECAP
 DELETE FROM brh.departamento WHERE sigla = 'SECAP';
 
+//Criando um relatório de contatos
+
+SELECT brh.colaborador.nome, brh.email_colaborador.email, brh.telefone_colaborador.numero
+FROM brh.colaborador
+LEFT JOIN brh.email_colaborador ON brh.colaborador.matricula = brh.email_colaborador.colaborador AND brh.email_colaborador.tipo = 'T'
+LEFT JOIN brh.telefone_colaborador ON brh.colaborador.matricula = brh.telefone_colaborador.colaborador AND brh.telefone_colaborador.tipo = 'C'
+WHERE brh.email_colaborador.email IS NOT NULL OR brh.telefone_colaborador.numero IS NOT NULL
+ORDER BY brh.colaborador.nome;
+
