@@ -95,4 +95,3 @@ LEFT JOIN
 ORDER BY
     "Projeto", "Colaborador", "Dependente";
 
-
