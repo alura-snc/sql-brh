@@ -1,0 +1,3 @@
+SELECT sigla, nome
+FROM C##brh.DEPARTAMENTO
+ORDER BY nome;
