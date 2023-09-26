@@ -18,5 +18,28 @@ brh.colaborador co
 order by senioridade, co.nome;
 
 
+-- precisa atualizar a tabela pois os indices estão diferentes
+-- atribuica de 1 a 5 e projeto de 6 a 9
+
+
+select * from brh.atribuicao;
+select * from brh.projeto;
+select * from brh.departamento;
+
+select at.projeto, count(*) as "total" 
+from brh.atribuicao at
+group by projeto;
+
+select distinct
+ pj.nome, sum(at.projeto) as "total"
+from
+brh.atribuicao at
+inner join
+brh.projeto pj
+on
+pj.id = at.projeto
+group by pj.nome
+;
+
 
 
