@@ -78,3 +78,10 @@ delete from brh.colaborador where departamento = 'SECAP'
 delete from brh.departamento where sigla = 'SECAP'
 /
 COMMIT;
+/
+--Criar uma consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome.;
+select * 
+ from dependente
+where  nome like '%h%'
+  and extract (month from data_nascimento) in (4,5,6)
+;
