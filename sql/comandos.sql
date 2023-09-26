@@ -41,5 +41,33 @@ pj.id = at.projeto
 group by pj.nome
 ;
 
+select co.nome, count(dp.nome) as "dependentes"
+from 
+brh.colaborador co
+inner join
+brh.dependente dp
+on co.matricula = dp.colaborador
+group by co.nome;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
