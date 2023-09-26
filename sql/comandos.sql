@@ -54,3 +54,23 @@ C.nome, D.nome;
 -- Excluir Departamento
 DELETE FROM brh.departamento
 WHERE sigla = 'SECAP';
+
+-- Relatório de Contatos
+SELECT
+    C.nome AS "Nome do Colaborador",
+    E.email AS "Email de Trabalho",
+    TC.numero AS "Telefone Celular"
+FROM
+    brh.colaborador C
+LEFT JOIN
+    brh.email_colaborador E
+ON
+    C.matricula = E.colaborador
+    AND E.tipo = 'T'
+LEFT JOIN
+    brh.telefone_colaborador TC
+ON
+    C.matricula = TC.colaborador
+    AND TC.tipo = 'M'
+ORDER BY
+    "Nome do Colaborador";
