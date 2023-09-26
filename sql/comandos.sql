@@ -50,3 +50,7 @@ ON
     C.matricula = D.colaborador
 ORDER BY
 C.nome, D.nome;
+
+-- Excluir Departamento
+DELETE FROM brh.departamento
+WHERE sigla = 'SECAP';
