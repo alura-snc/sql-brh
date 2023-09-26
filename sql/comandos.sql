@@ -91,3 +91,23 @@ where  nome like '%h%'
 select * from colaborador
 where salario = (select max(salario) as max_salario from colaborador)
 ;
+-- A senioridade dos colaboradores é determinada a faixa salarial:
+-- Júnior: até R$ 3.000,00;
+-- Pleno: R$ 3.000,01 a R$ 6.000,00;
+-- Sênior: R$ 6.000,01 a R$ 20.000,00;
+-- Corpo diretor: acima de R$ 20.000,00.
+-- Ordene a listagem por senioridade e por nome.
+select t.matricula,
+       t.nome,
+       t.salario, 
+       case
+           when t.salario <= 3000
+                then 'júnior'
+           when t.salario > 3000 and t.salario <= 6000
+               then 'pleno'
+           when t.salario > 6000 and t.salario <= 20000
+                then 'sênior'    
+           else 'corpo diretor'
+       end  senioridade
+   from colaborador t
+order by 4, 2;
