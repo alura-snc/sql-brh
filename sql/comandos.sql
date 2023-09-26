@@ -41,7 +41,7 @@ pj.id = at.projeto
 group by pj.nome
 ;
 
-select co.nome, count(dp.nome) as "dependentes"
+select co.nome, count(dp.nome) as "quantidade_dependentes"
 from 
 brh.colaborador co
 inner join
