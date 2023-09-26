@@ -85,3 +85,9 @@ select *
 where  nome like '%h%'
   and extract (month from data_nascimento) in (4,5,6)
 ;
+/
+-- Criar consulta que liste nome e o salário do colaborador com o maior salário;
+-- OBS.: A consulta deve ser flexível para continuar funcionando caso surja algum funcionário com salário maior que o do Zico.
+select * from colaborador
+where salario = (select max(salario) as max_salario from colaborador)
+;
