@@ -36,3 +36,17 @@ INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (5, 'A124', 4);
 -- Relatório de Departamentos
 SELECT sigla, nome FROM brh.departamento ORDER BY nome;
 
+-- Relatório de Dependentes
+SELECT
+    C.nome AS "Nome do Colaborador",
+    D.nome AS "Nome do Dependente",
+    D.data_nascimento AS "Data de Nascimento do Dependente",
+    D.parentesco AS "Parentesco do Dependente"
+FROM
+    brh.colaborador C
+INNER JOIN
+    brh.dependente D
+ON
+    C.matricula = D.colaborador
+ORDER BY
+C.nome, D.nome;
