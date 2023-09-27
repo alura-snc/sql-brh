@@ -155,3 +155,9 @@ SELECT *
 FROM BRH.DEPENDENTE
 WHERE (TO_CHAR(DATA_NASCIMENTO, 'MM') IN ('04', '05', '06')) OR (INSTR(NOME, 'h') > 0);
 
+//Consulta listando nome e o salário do colaborador com o maior salário;
+SELECT NOME, SALARIO
+FROM BRH.COLABORADOR
+WHERE SALARIO = (SELECT MAX(SALARIO) FROM BRH.COLABORADOR);
+
+
