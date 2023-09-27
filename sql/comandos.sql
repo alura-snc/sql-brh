@@ -111,3 +111,14 @@ select t.matricula,
        end  senioridade
    from colaborador t
 order by 4, 2;
+/
+-- Criar consulta que liste o nome do departamento, nome do projeto e quantos colaboradores daquele departamento fazem parte do projeto;
+-- Ordene a consulta pelo nome do departamento e nome do projeto.
+select  c.nome as nome_departamento, d.nome as nome_projeto, count(1) quantidade_colaboradores
+  from atribuicao a, colaborador b, departamento c, projeto d
+where a.colaborador = b.matricula
+  and b.departamento = c.sigla
+  and a.projeto = d.id
+group by c.nome, d.nome
+order by c.nome, d.nome
+;
