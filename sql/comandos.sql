@@ -50,18 +50,43 @@ on co.matricula = dp.colaborador
 group by co.nome;
 
 
-select
+(select
 cpf, nome, to_char(data_nascimento, 'dd/mm/yyy') as "Data_nascimento", parentesco, colaborador, trunc(months_between(sysdate,data_nascimento)/12) as "idade",
-(case when months_between(sysdate,data_nascimento)/12 < 18 then 'Menor de idade'
-      when months_between(sysdate,data_nascimento)/12 >=18  then 'Maior de idade' end) as Faixa_etaria
+        (case when months_between(sysdate,data_nascimento)/12 < 18 then 'Menor de idade'
+        when months_between(sysdate,data_nascimento)/12 >=18  then 'Maior de idade' end) as Faixa_etaria
 from
-brh.dependente;
+brh.dependente;) idade_parentesco
 
 
 
 select rownum, co.* from brh.colaborador co where rownum <=20
-order by nome desc;
+order by nome;
 
+
+
+
+
+select 
+senior.nome, senior.salario,senior.percentual, idade_parentesco.parentesco, idade_parentesco.faixa_etaria,
+(senior.salario * senior.percentual + idade_parentesco.faixa_etaria ) as valor_plano
+from
+(select
+dp.cpf, dp.nome, to_char(data_nascimento, 'dd/mm/yyy') as "Data_nascimento", parente, colaborador, trunc(months_between(sysdate,data_nascimento)/12) as "idade",
+        (case when months_between(sysdate,data_nascimento)/12 < 18 then 50
+        when months_between(sysdate,data_nascimento)/12 >=18  then 25 end) as Faixa_etaria,
+        (case when parentesco = 'Filho(a)' then 1 end) as parente
+from
+brh.dependente dp) idade_parentesco 
+inner join
+(select co.matricula, co.nome, co.salario,
+(case when co.salario <= 3000 then 0.01
+      when co.salario >= 3001 and co.salario <=6000 then 0.02
+      when co.salario >= 6001 and co.salario <=20000 then 0.03
+      when co.salario > 20000 then 0.05 end) as percentual
+from 
+brh.colaborador co
+order by percentual, co.nome) senior
+on senior.matricula = idade_parentesco.colaborador ;
 
 
 
