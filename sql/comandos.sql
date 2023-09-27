@@ -67,14 +67,15 @@ order by nome;
 
 
 select 
-senior.nome, senior.salario,senior.percentual, idade_parentesco.parentesco, idade_parentesco.faixa_etaria,
-(senior.salario * senior.percentual + idade_parentesco.faixa_etaria ) as valor_plano
+senior.nome, senior.salario,senior.percentual, idade_parentesco.parente,
+(senior.salario * senior.percentual + idade_parentesco.faixa_etaria + idade_parentesco.parente ) as valor_plano
 from
 (select
-dp.cpf, dp.nome, to_char(data_nascimento, 'dd/mm/yyy') as "Data_nascimento", parente, colaborador, trunc(months_between(sysdate,data_nascimento)/12) as "idade",
+dp.cpf, dp.nome, to_char(data_nascimento, 'dd/mm/yyy') as "Data_nascimento", parentesco, colaborador, trunc(months_between(sysdate,data_nascimento)/12) as "idade",
         (case when months_between(sysdate,data_nascimento)/12 < 18 then 50
         when months_between(sysdate,data_nascimento)/12 >=18  then 25 end) as Faixa_etaria,
-        (case when parentesco = 'Filho(a)' then 1 end) as parente
+        (case when parentesco = 'Filho(a)' then 0
+            when parentesco = 'Cônjuge' then 100 end) as parente
 from
 brh.dependente dp) idade_parentesco 
 inner join
