@@ -143,3 +143,15 @@ LEFT JOIN BRH.TELEFONE_COLABORADOR TELEFONE ON COL.MATRICULA = TELEFONE.COLABORA
 LEFT JOIN BRH.DEPENDENTE DEPENDENTE ON COL.MATRICULA = DEPENDENTE.COLABORADOR
 ORDER BY PROJ.NOME, COL.NOME, DEPENDENTE.NOME;
 
+// Correção de inconsistência de carga:
+UPDATE brh.atribuicao SET projeto = 5 WHERE projeto = 1;
+UPDATE brh.atribuicao SET projeto = 6 WHERE projeto = 2;
+UPDATE brh.atribuicao SET projeto = 7 WHERE projeto = 3;
+UPDATE brh.atribuicao SET projeto = 8 WHERE projeto = 4;
+
+// Consultas listando os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome.;
+
+SELECT *
+FROM BRH.DEPENDENTE
+WHERE (TO_CHAR(DATA_NASCIMENTO, 'MM') IN ('04', '05', '06')) OR (INSTR(NOME, 'h') > 0);
+
