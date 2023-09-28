@@ -42,6 +42,10 @@ INSERT INTO brh.dependente
 VALUES 
 ('240.741.543-15', 'A1234', 'Cicrana de Tal', 'Esposa)', to_date('1995-02-12', 'yyyy-mm-dd'))
 
+----------Relatório de departamentos
+  
+select sigla,nome from brh.departamento
+
 
 
 
