@@ -1,3 +1,5 @@
+----- Inserir novo colaborador
+
 INSERT INTO brh_colaborador 
 (matricula,cpf,nome,salario,departamento,cep,logradouro,complemento)
 VALUES
