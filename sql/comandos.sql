@@ -48,6 +48,15 @@ VALUES
   
 select sigla,nome from brh.departamento
 
+--------- Relatório de dependentes
+
+select colaborador, nome,data_nascimento,parentesco from brh.dependente
+
+------ Excluindo departamento SECAP
+
+DELETE SECAP FROM brh.departamento;
+
+SELECT * FROM brh.departamento
 
 
 
