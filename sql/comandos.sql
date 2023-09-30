@@ -144,3 +144,30 @@ FROM
     BRH.COLABORADOR
 WHERE
     SAlARIO = (SELECT MAX(SALARIO) FROM BRH.COLABORADOR);
+
+
+-- Criando uma consulta que liste a matrícula, nome, salário, e nível de senioridade do colaborador.
+-- Ordenando a listagem por senioridade e por nome.
+
+SELECT
+    MATRICULA,
+    NOME AS COLABORADOR,
+    SALARIO AS SALÁRIO,
+    CASE 
+        WHEN SALARIO <= 3000 THEN 'JUNIOR'
+        WHEN SALARIO BETWEEN 3000.01 AND 6000 THEN 'PLENO'
+        WHEN SALARIO BETWEEN 6000.01 AND 20000 THEN 'SÊNIOR'
+        ELSE 'CORPO DIRETOR'
+    END AS SENIORIDADE  
+FROM
+    BRH.COLABORADOR
+ORDER BY SENIORIDADE, NOME;
+
+    
+
+
+
+
+
+
+
