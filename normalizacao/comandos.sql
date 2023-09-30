@@ -219,6 +219,19 @@ SELECT
 FROM BRH.DEPENDENTE D
 ORDER BY D.COLABORADOR, D.NOME;
 
+//Paginar listagem de colaboradores
+SELECT NOME
+FROM (
+    SELECT 
+        NOME, 
+        ROW_NUMBER() OVER (ORDER BY NOME) AS RN
+    FROM BRH.COLABORADOR
+)
+WHERE RN > 10 AND RN <= 20;
+
+
+
+
 
 
 
