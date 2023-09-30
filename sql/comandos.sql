@@ -252,3 +252,70 @@ FROM
 ORDER BY NOME
 OFFSET 10 ROWS
  FETCH NEXT 10 ROWS ONLY;
+ 
+
+--___________________________________________________________________________________________________________
+
+-- O usuário quer saber quanto é a mensalidade que cada colaborador deve pagar ao plano de saúde. As regras de pagamento são:
+    --Cada nível de senioridade tem um percentual de contribuição diferente:
+    --Júnior paga 1% do salário;
+    --Pleno paga 2% do salário;
+    --Sênior paga 3% do salário;
+    --Corpo diretor paga 5% do salário.
+    --Cada tipo de dependente tem um valor adicional diferente:
+    --Cônjuge acrescenta R$ 100,00 na mensalidade;
+    --Maior de idade acrescenta R$ 50,00 na mensalidade;
+    --Menor de idade acrescenta R$ 25,00 na mensalidade.
+    --Ordene pelo nome do colaborador.
+
+CREATE VIEW BRH.VW_SAUDE_DEPENDENTE AS
+SELECT
+    COLABORADOR,
+    COUNT(*) AS "QUANTIDADE_DE_DEPENDENTES",
+    SUM(
+        CASE 
+            WHEN PARENTESCO ='CÃ´njuge' THEN 100.00
+            WHEN PARENTESCO ='Filho(a)' AND (TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12)) < 18 THEN 25.00
+            ELSE 50.00
+        END
+        ) AS VALOR_SAUDE_DEPENDENTE
+FROM BRH.DEPENDENTE GROUP BY COLABORADOR;
+
+       
+SELECT
+    C.MATRICULA,
+    C.NOME AS COLABORADOR,
+    C.SALARIO AS SALÁRIO,
+    CASE 
+        WHEN C.SALARIO <= 3000 THEN 'JUNIOR'
+        WHEN C.SALARIO BETWEEN 3000.01 AND 6000 THEN 'PLENO'
+        WHEN C.SALARIO BETWEEN 6000.01 AND 20000 THEN 'SÊNIOR'
+        ELSE 'CORPO DIRETOR'
+    END AS SENIORIDADE,
+    CASE 
+        WHEN C.SALARIO <= 3000 THEN '1%'
+        WHEN C.SALARIO BETWEEN 3000.01 AND 6000 THEN '2%'
+        WHEN C.SALARIO BETWEEN 6000.01 AND 20000 THEN '3%'
+        ELSE '5%'
+    END AS "PERCENTUAL - PLANO DE SAUDE",
+    CASE 
+        WHEN C.SALARIO <= 3000 THEN (C.SALARIO * 1)/100
+        WHEN C.SALARIO BETWEEN 3000.01 AND 6000 THEN (C.SALARIO * 2)/100
+        WHEN C.SALARIO BETWEEN 6000.01 AND 20000 THEN (C.SALARIO * 3)/100
+        ELSE (C.SALARIO * 5)/100
+    END AS "VALOR PLANO DE SAUDE COLABORADOR",
+    NVL(SD.QUANTIDADE_DE_DEPENDENTES,0) AS "QUANTIDADE DE DEPENDENTES",
+    NVL(SD.VALOR_SAUDE_DEPENDENTE,0) AS "VALOR PLANO DE SAUDE DEPENDENTE",
+    ((CASE 
+        WHEN C.SALARIO <= 3000 THEN (C.SALARIO * 1)/100
+        WHEN C.SALARIO BETWEEN 3000.01 AND 6000 THEN (C.SALARIO * 2)/100
+        WHEN C.SALARIO BETWEEN 6000.01 AND 20000 THEN (C.SALARIO * 3)/100
+        ELSE (C.SALARIO * 5)/100
+    END) + (NVL(SD.VALOR_SAUDE_DEPENDENTE,0))) AS "VALOR TOTAL DO PLANO DE SAUDE"
+FROM
+    BRH.COLABORADOR C
+LEFT JOIN
+    BRH.VW_SAUDE_DEPENDENTE SD ON SD.COLABORADOR = C.MATRICULA
+ORDER BY C.NOME
+
+
