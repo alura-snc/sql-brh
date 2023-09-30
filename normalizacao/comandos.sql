@@ -195,4 +195,14 @@ JOIN BRH.PROJETO PROJ ON Resultados.ID = PROJ.ID
 WHERE Quantidade_Colaboradores > 0
 ORDER BY DEP.NOME, PROJ.NOME;
 
+//Lista com nome do colaborador e a sua quantidade de dependentes
+SELECT
+    C.NOME AS Nome_Colaborador,
+    COUNT(D.COLABORADOR) AS Quantidade_Dependentes
+FROM BRH.COLABORADOR C
+LEFT JOIN BRH.DEPENDENTE D ON C.MATRICULA = D.COLABORADOR
+GROUP BY C.NOME
+HAVING COUNT(D.COLABORADOR) >= 2
+ORDER BY Quantidade_Dependentes DESC, Nome_Colaborador ASC;
+
 
