@@ -135,6 +135,9 @@ WHERE
 ORDER BY C.NOME, D.NOME;
 
 
+--___________________________________________________________________________________________________________
+
+
 -- Criando consulta que liste nome e o salário do colaborador com o maior salário.
 
 SELECT
@@ -145,6 +148,7 @@ FROM
 WHERE
     SAlARIO = (SELECT MAX(SALARIO) FROM BRH.COLABORADOR);
 
+--___________________________________________________________________________________________________________
 
 -- Criando uma consulta que liste a matrícula, nome, salário, e nível de senioridade do colaborador.
 -- Ordenando a listagem por senioridade e por nome.
@@ -162,6 +166,9 @@ SELECT
 FROM
     BRH.COLABORADOR
 ORDER BY SENIORIDADE, NOME;
+
+
+--___________________________________________________________________________________________________________
 
 
 -- Criando consulta que liste o nome do departamento, nome do projeto e quantos colaboradores daquele departamento fazem parte do projeto
@@ -182,15 +189,27 @@ INNER JOIN
 GROUP BY 
     D.NOME, P.NOME
 ORDER BY 
-    D.NOME, P.NOME 
+    D.NOME, P.NOME;
+    
 
+--___________________________________________________________________________________________________________
+    
+-- Criar consulta que liste nome do colaborador e a quantidade de dependentes que ele possui;
+-- No relatório deve ter somente colaboradores com 2 ou mais dependentes.
+-- Ordenar consulta pela quantidade de dependentes em ordem decrescente, e colaborador crescente
 
-
-
-
-
-
-
+SELECT 
+    C.NOME,
+    COUNT(*) AS "QUANTIDADE DE DEPENDENTES"
+FROM
+    BRH.DEPENDENTE D
+INNER JOIN
+    BRH.COLABORADOR C ON D.COLABORADOR = C.MATRICULA
+GROUP BY 
+    C.NOME
+HAVING (COUNT(*)) >= 2
+ORDER BY
+   "QUANTIDADE DE DEPENDENTES" DESC, C.NOME;
 
 
     
