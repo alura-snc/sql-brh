@@ -229,9 +229,38 @@ FROM (
 )
 WHERE RN > 10 AND RN <= 20;
 
-
-
-
-
-
+// Relatório de plano de saúde
+SELECT
+    COL.MATRICULA AS Matricula,
+    COL.NOME AS Nome_Colaborador,
+    COL.SALARIO AS Salario,
+    CASE
+        WHEN COL.SALARIO <= 3000 THEN 'Júnior'
+        WHEN COL.SALARIO <= 6000 THEN 'Pleno'
+        WHEN COL.SALARIO <= 20000 THEN 'Sênior'
+        ELSE 'Corpo diretor'
+    END AS Nivel_Senioridade,
+    (COL.SALARIO * 
+        CASE
+            WHEN COL.SALARIO <= 3000 THEN 0.01
+            WHEN COL.SALARIO <= 6000 THEN 0.02
+            WHEN COL.SALARIO <= 20000 THEN 0.03
+            ELSE 0.05
+        END
+    + SUM(
+        CASE
+            WHEN DEP.PARENTESCO = 'Cônjuge' THEN 100
+            WHEN EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM DEP.DATA_NASCIMENTO) >= 18 THEN 50
+            WHEN EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM DEP.DATA_NASCIMENTO) < 18 THEN 25
+            ELSE 0
+        END
+    )) AS Mensalidade_Total
+FROM
+    BRH.COLABORADOR COL
+LEFT JOIN
+    BRH.DEPENDENTE DEP ON COL.MATRICULA = DEP.COLABORADOR
+GROUP BY
+    COL.MATRICULA, COL.NOME, COL.SALARIO
+ORDER BY
+    COL.NOME;
 
