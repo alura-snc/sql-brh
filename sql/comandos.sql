@@ -113,3 +113,25 @@ INNER JOIN
 WHERE
     T.TIPO ='M'
 ORDER BY P.NOME,C.NOME,DC.NOME;
+
+-- ============================================================================================================
+
+-- CODIGOS 3ª SEMANA
+
+
+-- Criando consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome. 
+-- Ordenando pelo nome do colaborador, depois pelo nome do dependente
+
+SELECT 
+    C.NOME AS COLABORADOR, 
+    D.NOME AS DEPENDETE,
+    D.DATA_NASCIMENTO AS "DATA DE NASCIMENTO"
+FROM BRH.DEPENDENTE D
+    INNER JOIN 
+        BRH.COLABORADOR C ON C.MATRICULA = D.COLABORADOR       
+WHERE
+   (LOWER (D.NOME)) LIKE '%h%' OR
+   EXTRACT(MONTH from D.DATA_NASCIMENTO) BETWEEN 4 and 6
+ORDER BY C.NOME, D.NOME
+
+
