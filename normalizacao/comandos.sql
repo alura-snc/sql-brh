@@ -205,4 +205,20 @@ GROUP BY C.NOME
 HAVING COUNT(D.COLABORADOR) >= 2
 ORDER BY Quantidade_Dependentes DESC, Nome_Colaborador ASC;
 
+//Lista de faixa etária de dependentes
+SELECT
+    D.CPF AS CPF_Dependente,
+    D.NOME AS Nome_Dependente,
+    TO_CHAR(D.DATA_NASCIMENTO, 'DD/MM/YYYY') AS Data_Nascimento_Brasil,
+    D.PARENTESCO,
+    D.COLABORADOR AS Matricula_Colaborador,
+    CASE
+        WHEN EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM D.DATA_NASCIMENTO) < 18 THEN 'Menor de idade'
+        ELSE 'Maior de idade'
+    END AS Faixa_Etaria
+FROM BRH.DEPENDENTE D
+ORDER BY D.COLABORADOR, D.NOME;
+
+
+
 
