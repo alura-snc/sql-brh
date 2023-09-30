@@ -132,6 +132,15 @@ FROM BRH.DEPENDENTE D
 WHERE
    (LOWER (D.NOME)) LIKE '%h%' OR
    EXTRACT(MONTH from D.DATA_NASCIMENTO) BETWEEN 4 and 6
-ORDER BY C.NOME, D.NOME
+ORDER BY C.NOME, D.NOME;
 
 
+-- Criando consulta que liste nome e o salário do colaborador com o maior salário.
+
+SELECT
+    NOME AS COLABORADOR,
+    SALARIO
+FROM
+    BRH.COLABORADOR
+WHERE
+    SAlARIO = (SELECT MAX(SALARIO) FROM BRH.COLABORADOR);
