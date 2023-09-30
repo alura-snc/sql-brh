@@ -211,6 +211,37 @@ HAVING (COUNT(*)) >= 2
 ORDER BY
    "QUANTIDADE DE DEPENDENTES" DESC, C.NOME;
 
+--___________________________________________________________________________________________________________
+
+
+-- Criando consulta que liste o CPF do dependente, o nome do dependente, a data de nascimento (formato brasileiro), parentesco, matrícula do colaborador, a idade do dependente e sua faixa etária;
+-- Se o dependente tiver menos de 18 anos, informar a faixa etária Menor de idade;
+-- Se o dependente tiver 18 anos ou mais, informar faixa etária Maior de idade;
+-- Ordenar consulta por matrícula do colaborador e nome do dependente.
+
+SELECT 
+    CPF,
+    NOME AS "NOME DO DEPENDENTE",
+    TO_CHAR(DATA_NASCIMENTO,'DD/MM/YYYY') AS "DATA DE NASCIMENTO",
+    PARENTESCO,
+    COLABORADOR AS "MATRICULA DO COLABORADOR",
+    TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12) AS IDADE,
+    CASE 
+        WHEN (TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12)) < 18 THEN 'MENOR DE IDADE'
+        ELSE 'MAIOR DE IDADE'
+    END AS "FAIXA ETÁRIA"
+FROM 
+    BRH.DEPENDENTE
+ORDER BY
+    COLABORADOR, NOME;
+    
+
+--___________________________________________________________________________________________________________
+
+
+
+
+
 
     
 
