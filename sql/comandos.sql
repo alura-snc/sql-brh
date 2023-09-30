@@ -238,16 +238,17 @@ ORDER BY
 
 --___________________________________________________________________________________________________________
 
+-- O usuário quer paginar a listagem de colaboradores em páginas de 10 registros cada. Há 26 colaboradores na base, então há 3 páginas:
+-- Página 1: da Ana ao João (registros 1 ao 10);
+-- Página 2: da Kelly à Tati (registros 11 ao 20); e
+-- Página 3: do Uri ao Zico (registros 21 ao 26).
+-- Crie uma consulta que liste a segunda página
+-- Ordene pelo nome do colaborador.
 
-
-
-
-
-    
-
-
-
-
-
-
-
+SELECT 
+    *    
+FROM 
+    BRH.COLABORADOR
+ORDER BY NOME
+OFFSET 10 ROWS
+ FETCH NEXT 10 ROWS ONLY;
