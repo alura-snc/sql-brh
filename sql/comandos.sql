@@ -128,3 +128,40 @@ WHERE (EXTRACT(MONTH FROM data_nascimento) IN (4, 5, 6))
 SELECT nome, salario
 FROM brh.colaborador
 WHERE salario = (SELECT MAX(salario) FROM brh.colaborador);
+
+-- Relatório de Senioridade
+SELECT
+    matricula,
+    nome,
+    salario,
+    CASE
+        WHEN salario > 20000 THEN 'Corpo Diretor'
+        WHEN salario > 6000 THEN 'Sênior'
+        WHEN salario > 3000 THEN 'Pleno'
+        ELSE 'Júnior'
+    END AS nivel_senioridade
+FROM
+    brh.colaborador
+ORDER BY
+    DECODE(
+        CASE
+            WHEN salario > 20000 THEN 'Corpo Diretor'
+            WHEN salario > 6000 THEN 'Sênior'
+            WHEN salario > 3000 THEN 'Pleno'
+            ELSE 'Júnior'
+        END,
+        'Corpo Diretor', 1,
+        'Júnior', 2,
+        'Pleno', 3,        
+        'Sênior', 4        
+    ),
+    nome;
+
+
+
+
+
+
+
+
+
