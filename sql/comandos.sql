@@ -117,3 +117,9 @@ ON
     C2.matricula = DP.colaborador
 ORDER BY
     "Nome do Projeto", "Nome do Colaborador", "Nome do Dependente";
+
+-- Semana 3 
+-- Filtrar Dependentes
+SELECT * FROM brh.dependente
+WHERE (EXTRACT(MONTH FROM data_nascimento) IN (4, 5, 6))
+    OR (UPPER(nome) LIKE '%H%');
