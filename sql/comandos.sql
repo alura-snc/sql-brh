@@ -123,3 +123,8 @@ ORDER BY
 SELECT * FROM brh.dependente
 WHERE (EXTRACT(MONTH FROM data_nascimento) IN (4, 5, 6))
     OR (UPPER(nome) LIKE '%H%');
+
+-- Listar Colaborador com Maior Salário
+SELECT nome, salario
+FROM brh.colaborador
+WHERE salario = (SELECT MAX(salario) FROM brh.colaborador);
