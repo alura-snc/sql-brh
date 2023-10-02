@@ -197,3 +197,12 @@ Floor(Months_Between(SYSDATE, DATA_NASCIMENTO)/12) as "IDADE DEPENDENTE",
 end) as "FAIXA ETÁRIA"
 from dependente
 order by colaborador, nome
+
+--Paginar listagem de colaboradores
+select * from colaborador
+order by nome
+offset(10) rows fetch next 10 rows only
+
+          
+      
+
