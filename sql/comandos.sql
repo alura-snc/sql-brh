@@ -95,3 +95,118 @@ LEFT JOIN
 ORDER BY
     "Projeto", "Colaborador", "Dependente";
 
+-- LISTA DEPENDENTES
+
+SELECT C##BRH.DEPENDENTE.*,C##BRH.COLABORADOR.nome AS "Nome do Colaborador"  
+FROM C##BRH.DEPENDENTE 
+INNER JOIN C##BRH.COLABORADOR 
+ON C##BRH.COLABORADOR.MATRICULA = C##BRH.DEPENDENTE.COLABORADOR
+WHERE (EXTRACT(MONTH FROM C##BRH.DEPENDENTE.DATA_NASCIMENTO) IN (4,5,6))
+OR (UPPER(C##BRH.DEPENDENTE.NOME) LIKE '%H%') ORDER BY C##BRH.COLABORADOR.nome,C##BRH.DEPENDENTE.NOME;
+
+-- LISTA COLABORADOR MAIOR SALARIO
+
+SELECT
+    nome,
+    salario
+FROM
+    c##brh.colaborador
+WHERE salario = (SELECT MAX(salario) FROM c##brh.colaborador);
+
+-- RELATORIO SENIORIDADE
+
+SELECT
+    matricula,
+    nome,
+    salario,
+    CASE
+        WHEN salario BETWEEN 0 AND 3000 THEN 'JUNIOR'
+        WHEN salario BETWEEN 3000.01 AND 6000 THEN 'PLENO'
+        WHEN salario BETWEEN 6000.01 AND 20000 THEN 'SENIOR'
+        WHEN salario > 20000 THEN 'CORPO DIRETOR'
+        ELSE 'DESCONHECIDO'
+    END AS SENIORIDADE
+FROM
+    c##brh.colaborador
+ORDER BY
+    SENIORIDADE, NOME;
+
+-- LISTAR COLABORADOR EM PROJETO
+
+SELECT
+    C##brh.DEPARTAMENTO.nome AS Nome_Departamento,
+    C##brh.PROJETO.nome AS Nome_Projeto,
+    COUNT(C##brh.ATRIBUICAO.colaborador) AS Quantidade_Colaboradores
+FROM
+    C##brh.DEPARTAMENTO
+INNER JOIN
+    C##brh.COLABORADOR ON C##brh.DEPARTAMENTO.sigla = C##brh.COLABORADOR.departamento
+INNER JOIN
+    C##brh.ATRIBUICAO ON C##brh.COLABORADOR.matricula = C##brh.ATRIBUICAO.colaborador
+INNER JOIN
+    C##brh.PROJETO ON C##brh.ATRIBUICAO.projeto = C##brh.PROJETO.id
+GROUP BY
+    C##brh.DEPARTAMENTO.nome, C##brh.PROJETO.nome
+ORDER BY
+    C##brh.DEPARTAMENTO.nome, C##brh.PROJETO.nome;
+
+
+-- LISTAR COLABORADORES COM MAIS DEPENDENTES
+-- No relatório deve ter somente colaboradores com 2 ou mais dependentes.
+-- Ordenar consulta pela quantidade de dependentes em ordem decrescente, e colaborador crescente.
+
+SELECT 
+    C.NOME,
+    COUNT(*) AS "QUANTIDADE DE DEPENDENTES"
+FROM
+    BRH.DEPENDENTE D
+INNER JOIN
+    BRH.COLABORADOR C ON D.COLABORADOR = C.MATRICULA
+GROUP BY 
+    C.NOME
+HAVING (COUNT(*)) >= 2
+ORDER BY
+   "QUANTIDADE DE DEPENDENTES" DESC, C.NOME;
+
+
+-- LISTAR FAIXA ETÁRIA DOS DEPENDENDES
+-- Criando consulta que liste o CPF do dependente, o nome do dependente, a data de nascimento (formato brasileiro), parentesco, matrícula do colaborador, a idade do dependente e sua faixa etária;
+-- Se o dependente tiver menos de 18 anos, informar a faixa etária Menor de idade;
+-- Se o dependente tiver 18 anos ou mais, informar faixa etária Maior de idade;
+-- Ordenar consulta por matrícula do colaborador e nome do dependente.
+
+SELECT 
+    CPF,
+    NOME AS "NOME DO DEPENDENTE",
+    TO_CHAR(DATA_NASCIMENTO,'DD/MM/YYYY') AS "DATA DE NASCIMENTO",
+    PARENTESCO,
+    COLABORADOR AS "MATRICULA DO COLABORADOR",
+    TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12) AS IDADE,
+    CASE 
+        WHEN (TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12)) < 18 THEN 'MENOR DE IDADE'
+        ELSE 'MAIOR DE IDADE'
+    END AS "FAIXA ETÁRIA"
+FROM 
+    BRH.DEPENDENTE
+ORDER BY
+    COLABORADOR, NOME;
+
+
+-- PAGINAR LISTAGEM DE COLABORADORES
+-- O usuário quer paginar a listagem de colaboradores em páginas de 10 registros cada. Há 26 colaboradores na base, então há 3 páginas:
+-- Página 1: da Ana ao João (registros 1 ao 10);
+-- Página 2: da Kelly à Tati (registros 11 ao 20); e
+-- Página 3: do Uri ao Zico (registros 21 ao 26).
+-- Crie uma consulta que liste a segunda página
+-- Ordene pelo nome do colaborador.
+
+SELECT 
+    *    
+FROM 
+    BRH.COLABORADOR
+ORDER BY NOME
+OFFSET 10 ROWS
+ FETCH NEXT 10 ROWS ONLY;
+
+ 
+
