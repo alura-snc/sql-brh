@@ -142,6 +142,18 @@ order by c.nome,d.nome
 select nome, salario from colaborador
 where salario = (select max(salario) from colaborador)
 
-
+--Relatório de senioridade
+select 
+matricula,
+nome,
+salario,
+(case 
+    when salario>20000 then 'CORPO DIRETOR'
+    when salario>=6000.01 then 'SÊNIOR'
+    when salario>=3000.01 then 'PLENO'
+    else 'JÚNIOR'
+end) as "NIVEL DE SENIORIDADE"
+from colaborador
+order by "NIVEL DE SENIORIDADE", nome
 
 
