@@ -24,3 +24,8 @@
       on brh.d.colaborador = brh.c.matricula
       where to_char(data_nascimento, 'MM') in (04, 05, 06) or brh.d.nome like '%h%'
       order by "Dependente"
+
+### Colaborador com maior salário
+
+    select nome, salario from brh.colaborador
+    order by salario desc;
