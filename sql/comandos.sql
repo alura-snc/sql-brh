@@ -138,6 +138,10 @@ on d.colaborador=c.matricula
 where To_Char(d.data_nascimento,'MM') in (4,5,6) or d.nome like '%h%'
 order by c.nome,d.nome
 
+--Listar colaborador com maior salário
+select nome, salario from colaborador
+where salario = (select max(salario) from colaborador)
+
 
 
 
