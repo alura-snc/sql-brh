@@ -1,3 +1,4 @@
+--SPRINT#2
 --1 Inserir novo colaborador
 select * from papel 
 insert into PAPEL (id,nome)
@@ -124,7 +125,18 @@ Dependente
 on Colaborador.matricula=Dependente.Colaborador
 order by projeto.nome, colaborador.nome, dependente.nome
 
-
+--SPRINT#3
+--Filtrar dependentes
+select 
+c.nome as "NOME COLABORADOR", 
+d.nome as "NOME DEPENDENTE",
+d.cpf as "CPF DEPENDENTE", 
+To_Char(data_nascimento,'DD/MM/YYYY') "DATA NASCIMENTO" 
+from dependente d
+inner join colaborador c
+on d.colaborador=c.matricula
+where To_Char(d.data_nascimento,'MM') in (4,5,6) or d.nome like '%h%'
+order by c.nome,d.nome
 
 
 
