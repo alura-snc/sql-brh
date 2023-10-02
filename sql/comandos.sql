@@ -184,5 +184,16 @@ group by c.nome
 having count(d.colaborador)>=2
 order by "QUANTIDADE DEPENDENTES" desc, c.nome asc
 
-
-
+--Listar faixa etária dos dependentes
+select
+cpf,
+nome,
+To_Char(data_nascimento,'DD/MM/YYYY') as "DATA NASCIMENTO",
+parentesco, 
+colaborador as "Matrícula Colaborador",
+Floor(Months_Between(SYSDATE, DATA_NASCIMENTO)/12) as "IDADE DEPENDENTE",
+(case when Months_Between(SYSDATE, DATA_NASCIMENTO)/12>=18 then 'Maior de Idade'
+     else 'Menor de Idade'
+end) as "FAIXA ETÁRIA"
+from dependente
+order by colaborador, nome
