@@ -173,5 +173,16 @@ inner join departamento d
 on c.departamento=d.sigla
 group by d.nome,p.nome
 
+--Listar colaboradores com mais dependentes
+select
+c.nome as "NOME COLABORADOR",
+count(d.colaborador) as "QUANTIDADE DEPENDENTES"
+from colaborador c 
+inner join dependente d
+on c.matricula = d.colaborador
+group by c.nome
+having count(d.colaborador)>=2
+order by "QUANTIDADE DEPENDENTES" desc, c.nome asc
+
 
 
