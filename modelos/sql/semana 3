@@ -1,0 +1,26 @@
+## Filtrar Dependentes
+### Ordenação Colaborador
+ select
+    brh.c.nome as "Colaborador",
+    brh.d.nome as "Dependente",
+    to_char(data_nascimento, 'MM') as "Mês_Nascimento"
+    from 
+    brh.colaborador c
+    inner join
+    brh.dependente d
+    on brh.d.colaborador = brh.c.matricula
+    where to_char(data_nascimento, 'MM') in (04, 05, 06) or brh.d.nome like '%h%'
+    order by "Colaborador"
+    
+### Ordenaçãor Dependente
+   select
+      brh.c.nome as "Colaborador",
+      brh.d.nome as "Dependente",
+      to_char(data_nascimento, 'MM') as "Mês_Nascimento"
+      from 
+      brh.colaborador c
+      inner join
+      brh.dependente d
+      on brh.d.colaborador = brh.c.matricula
+      where to_char(data_nascimento, 'MM') in (04, 05, 06) or brh.d.nome like '%h%'
+      order by "Dependente"
