@@ -1,4 +1,8 @@
+
+-- SEMANA 2
+****************************
 --Novos cadastros
+****************************
 INSERT INTO brh.papel (id, nome) VALUES (8, 'Especialista de Negócios');
 INSERT INTO brh.endereco (cep, uf, cidade, bairro) VALUES ('11111-231', 'SP', 'São Paulo', 'Jardim Flora');
 INSERT INTO brh.colaborador (matricula, nome, cpf, salario, departamento, cep, logradouro, complemento_endereco) VALUES ('A001', 'Fulano', '123.456.789-10', '78055', 'DIR', '11111-231', 'Rua dos Perdidos', 'Jardim Flora');
@@ -11,14 +15,20 @@ INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento)
 INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento) VALUES ('222.123.787-09', 'A001', 'Cicrana', 'Cônjuge', to_date('1980-01-20', 'yyyy-mm-dd'));
 INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (9, 'A001', 8);
 
+*****************************************
 -- Relatório de Departamentos
-select nome, sigla from brh.departamento;
+*****************************************
+SELECT * from brh.departamento
+order by brh.departamento.nome
 
+*****************************************
 -- Excluir departamento SECAP
+*****************************************
 delete from brh.departamento where sigla = 'SECAP';
 
+****************************
 -- Relatório de contatos
-
+****************************
 select
 brh.colaborador.nome,
 brh.email_colaborador.email,
@@ -32,16 +42,25 @@ where brh.email_colaborador.tipo = 'T' and
 brh.telefone_colaborador.tipo = 'M'
 order by brh.colaborador.nome
 
-
+*******************************
   --Relatório de dependentes
+*******************************
+select
+brh.c.nome as "Colaborador",
+brh.d.nome as "Dependente",
+brh.d.data_nascimento,
+brh.d.parentesco
+from 
+brh.colaborador c
+inner join brh.dependente d
+on brh.c.matricula = brh.d.colaborador
+order by brh.c.nome, brh.d.nome
 
-select 
-brh.colaborador.nome as "Nome Colaborador",
-brh.dependente.nome as "Nome Dependente",
-brh.dependente.data_nascimento,
-brh.dependente.parentesco
-from brh.colaborador
-inner join brh.dependente
-on brh.colaborador.matricula = brh.dependente.colaborador
-
+****************
 -- Desafio
+****************
+
+
+
+
+-- SEMANA 3
