@@ -159,5 +159,19 @@ order by "NIVEL DE SENIORIDADE", nome
 --Corrigindo Errata - Atualizando tabela Atribuição
 UPDATE atribuicao SET projeto = projeto+4 
 commit;
+--Listar colaboradores em projetos
+select
+d.nome as "NOME DEPARTAMENTO",
+p.nome as "NOME PROJETO",
+count(c.departamento) as "QUANTIDADE_COLABORADORES"
+from projeto p 
+inner join atribuicao a
+on p.id=a.projeto
+inner join colaborador c
+on a.colaborador=c.matricula
+inner join departamento d
+on c.departamento=d.sigla
+group by d.nome,p.nome
+
 
 
