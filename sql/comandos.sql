@@ -156,4 +156,8 @@ end) as "NIVEL DE SENIORIDADE"
 from colaborador
 order by "NIVEL DE SENIORIDADE", nome
 
+--Corrigindo Errata - Atualizando tabela Atribuição
+UPDATE atribuicao SET projeto = projeto+4 
+commit;
+
 
