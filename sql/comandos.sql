@@ -131,9 +131,7 @@ WHERE salario = (SELECT MAX(salario) FROM brh.colaborador);
 
 -- Relatório de Senioridade
 SELECT
-    matricula,
-    nome,
-    salario,
+    matricula, nome, salario,
     CASE
         WHEN salario <= 3000 THEN 'Junior'
         WHEN salario <= 6000 THEN 'Pleno'
@@ -143,8 +141,7 @@ SELECT
 FROM
     brh.colaborador
 ORDER BY 
-    nivel_senioridade, 
-    nome;
+    nivel_senioridade, nome;
 
 -- Listar Colaboradores em Projeto
 SELECT 
@@ -179,5 +176,20 @@ HAVING
 ORDER BY 
     quantidade_de_dependentes DESC, nome_do_colaborador ASC;
 
-
+-- Listar faixa etária dos dependentes
+SELECT 
+    d.cpf AS cpf_do_dependente,
+    d.nome AS nome_do_dependente,
+    TO_CHAR(d.data_nascimento, 'DD/MM/YYYY') AS data_de_nascimento,
+    d.parentesco,
+    d.colaborador AS matricula_do_colaborador,
+    EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM d.data_nascimento) AS idade_do_dependente,
+    CASE 
+        WHEN EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM d.data_nascimento) < 18 THEN 'Menor de idade'
+        ELSE 'Maior de idade'
+    END AS faixa_etaria
+FROM 
+    brh.dependente d
+ORDER BY 
+    d.colaborador, d.nome;
 
