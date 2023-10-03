@@ -35,3 +35,33 @@ END;
 //TESTANDO A FUNÇÃO
 SELECT brh.calcula_idade(DATE '1982-09-03') FROM DUAL;
 
+//CRIAR FUNÇÃO FINALIZA_PROJETO
+CREATE OR REPLACE FUNCTION brh.finaliza_projeto(
+    p_projeto_id NUMBER)
+RETURN DATE
+IS
+  v_data_finalizacao DATE;
+BEGIN
+  -- Define a data de finalização como a data e hora atuais
+  v_data_finalizacao := SYSDATE;
+
+  -- Atualiza a tabela de projetos com a data de finalização
+  UPDATE brh.projeto
+  SET fim = v_data_finalizacao
+  WHERE id = p_projeto_id;
+
+  -- Retorna a data de finalização atribuída ao projeto
+  RETURN v_data_finalizacao;
+END;
+/
+
+//TESTANDO A FUNÇÃO
+DECLARE
+
+  v_data_finalizacao DATE;
+BEGIN
+   v_data_finalizacao := brh.finaliza_projeto(8); 
+   DBMS_OUTPUT.PUT_LINE('Data de Finalização: ' || TO_CHAR(v_data_finalizacao, 'DD-MON-YYYY HH24:MI:SS'));
+    -- COMMIT;
+END;
+/
