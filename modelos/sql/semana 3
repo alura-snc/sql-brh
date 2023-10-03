@@ -1,4 +1,6 @@
-## Filtrar Dependentes
+**********************
+Filtrar Dependentes
+**********************
 ### Ordenação Colaborador
  select
     brh.c.nome as "Colaborador",
@@ -25,7 +27,76 @@
       where to_char(data_nascimento, 'MM') in (04, 05, 06) or brh.d.nome like '%h%'
       order by "Dependente"
 
+***********************************
 ### Colaborador com maior salário
-
+***********************************
     select nome, salario from brh.colaborador
     order by salario desc;
+
+ou
+select nome, salario from brh.colaborador
+where salario = 
+    (select max(salario)
+    from brh.colaborador)
+
+**************
+Senioridade
+**************
+
+select matricula, nome, salario,
+    case when salario <= 3000 then 'Júnior'
+         when salario > 3000 and salario <= 6000 then 'Pleno'
+         when salario > 6000 and salario <= 20000 then 'Sênior'
+            else 'Corpo diretor'
+    end as senioridade         
+from brh.colaborador
+order by senioridade
+
+***************************
+Colaboradores em Projetos
+***************************
+
+select
+brh.d.nome as departamento,
+brh.p.nome as projeto,
+count(brh.c.nome) as numero_colaborador
+from brh.departamento d
+inner join brh.colaborador c
+on brh.d.sigla = brh.c.departamento
+inner join brh.atribuicao a
+on brh.c.matricula = brh.a.colaborador
+inner join brh.projeto p
+on brh.a.projeto = brh.p.id
+group by d.nome, p.nome
+order by projeto
+
+************************************
+Colaboradores com mais dependentes
+************************************
+
+select * from (
+    select brh.c.nome as "colaborador", count(*) as contagem
+    from brh.colaborador c
+    inner join brh.dependente d
+    on brh.d.colaborador = brh.c.matricula
+    group by c.nome)
+where contagem >= 2
+order by contagem desc;
+ou order by "colaborador"
+
+************************************
+           Faixa etária
+************************************
+
+select cpf, nome,
+TO_CHAR(data_nascimento, 'dd/mm/yyyy') as data_formatada,
+parentesco, colaborador,
+trunc(months_between(sysdate, data_nascimento)/12)as idade,
+case when trunc(months_between(sysdate, data_nascimento)/12) < 18 then 'Menor idade'
+    else 'Maior idade'
+end as faixa etária
+from brh.dependente
+
+***************************
+Listagem de Colaboradores
+***************************
