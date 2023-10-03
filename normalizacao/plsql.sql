@@ -20,3 +20,18 @@ BEGIN
     COMMIT; 
     END;
 /
+
+//CRIAR FUNÇÃO CALCULA_IDADE
+CREATE OR REPLACE FUNCTION brh.calcula_idade (
+    p_data_referencia DATE
+) RETURN NUMBER IS
+    v_idade NUMBER;
+BEGIN
+    v_idade := FLOOR(MONTHS_BETWEEN(SYSDATE, p_data_referencia) / 12);
+    RETURN v_idade;
+END;
+/
+
+//TESTANDO A FUNÇÃO
+SELECT brh.calcula_idade(DATE '1982-09-03') FROM DUAL;
+
