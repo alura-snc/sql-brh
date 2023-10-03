@@ -135,32 +135,34 @@ SELECT
     nome,
     salario,
     CASE
-        WHEN salario > 20000 THEN 'Corpo Diretor'
-        WHEN salario > 6000 THEN 'Sênior'
-        WHEN salario > 3000 THEN 'Pleno'
-        ELSE 'Júnior'
+        WHEN salario <= 3000 THEN 'Junior'
+        WHEN salario <= 6000 THEN 'Pleno'
+        WHEN salario <= 20000 THEN 'Sênior'
+        ELSE 'Corpo Diretor'
     END AS nivel_senioridade
 FROM
     brh.colaborador
-ORDER BY
-    DECODE(
-        CASE
-            WHEN salario > 20000 THEN 'Corpo Diretor'
-            WHEN salario > 6000 THEN 'Sênior'
-            WHEN salario > 3000 THEN 'Pleno'
-            ELSE 'Júnior'
-        END,
-        'Corpo Diretor', 1,
-        'Júnior', 2,
-        'Pleno', 3,        
-        'Sênior', 4        
-    ),
+ORDER BY 
+    nivel_senioridade, 
     nome;
 
-
-
-
-
+-- Listar Colaboradores em Projeto
+SELECT 
+    d.nome AS nome_do_departamento,
+    p.nome AS nome_do_projeto,
+    COUNT(a.colaborador) AS quantidade_de_colaboradores
+FROM 
+    brh.atribuicao a
+JOIN 
+    brh.projeto p ON a.projeto = p.id
+JOIN 
+    brh.colaborador c ON a.colaborador = c.matricula
+JOIN 
+    brh.departamento d ON c.departamento = d.sigla
+GROUP BY 
+    d.nome, p.nome
+ORDER BY 
+    d.nome, p.nome;
 
 
 
