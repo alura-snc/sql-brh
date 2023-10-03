@@ -56,11 +56,32 @@ inner join brh.dependente d
 on brh.c.matricula = brh.d.colaborador
 order by brh.c.nome, brh.d.nome
 
-****************
--- Desafio
-****************
+******************************************
+-- Desafio relatório analítico de equipes
+******************************************
+
+select
+brh.d.nome as departamento,
+brh.d.chefe as chefe_departamento,
+brh.c.nome as colaborador,
+brh.t.numero as telefone_colaborador,
+brh.p.nome as projeto,
+brh.pa.nome as papel,
+brh.de.nome as dependente
+FROM
+brh.departamento d inner join brh.colaborador c
+on brh.d.sigla = brh.c.departamento
+inner join brh.telefone_colaborador t
+on brh.c.matricula = brh.t.colaborador
+inner join brh.atribuicao a
+on brh.c.matricula = brh.a.colaborador
+inner join brh.projeto p
+on brh.a.projeto = brh.p.id 
+inner join brh.papel pa
+on brh.a.papel = brh.pa.id
+left join brh.dependente de
+on brh.c.matricula = brh.de.colaborador
 
 
 
 
--- SEMANA 3
