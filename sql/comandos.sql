@@ -164,6 +164,20 @@ GROUP BY
 ORDER BY 
     d.nome, p.nome;
 
+-- Listar colaboradores com mais dependentes
+SELECT 
+    c.nome AS nome_do_colaborador,
+    COUNT(d.cpf) AS quantidade_de_dependentes
+FROM 
+    brh.colaborador c
+LEFT JOIN 
+    brh.dependente d ON c.matricula = d.colaborador
+GROUP BY 
+    c.matricula, c.nome
+HAVING 
+    COUNT(d.cpf) >= 2
+ORDER BY 
+    quantidade_de_dependentes DESC, nome_do_colaborador ASC;
 
 
 
