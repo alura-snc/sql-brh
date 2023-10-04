@@ -101,5 +101,21 @@ BEGIN
  END;
 /
 
-SELECT * FROM BRH.PROJETO;
+//VALIDAR CÁLCULO DE IDADE
+CREATE OR REPLACE FUNCTION brh.calcula_idade (
+    p_data_referencia DATE
+) RETURN NUMBER
+IS
+    v_idade NUMBER;
+BEGIN
+    -- Verifica se a data de referência é válida (menor que a data atual)
+    IF p_data_referencia IS NULL OR p_data_referencia >= SYSDATE THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Impossível calcular idade! Data inválida: ' || TO_CHAR(p_data_referencia, 'DD-MON-YYYY') || '.');
+    END IF;
+
+    v_idade := FLOOR(MONTHS_BETWEEN(SYSDATE, p_data_referencia) / 12);
+    RETURN v_idade;
+END;
+/
+
 
