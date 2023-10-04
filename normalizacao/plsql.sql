@@ -65,3 +65,41 @@ BEGIN
     -- COMMIT;
 END;
 /
+
+//VALIDAR NOVO PROJETO
+CREATE OR REPLACE PROCEDURE brh.insere_projeto (
+    p_nome_projeto VARCHAR2,
+    p_responsavel_projeto VARCHAR2
+) IS
+BEGIN
+  -- Verifica se o nome do projeto é válido (pelo menos duas letras)
+  IF LENGTH(p_nome_projeto) < 2 OR p_nome_projeto IS NULL THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Nome de projeto inválido! Deve ter dois ou mais caracteres.');
+  END IF;
+
+  -- Insere o projeto na tabela de projetos
+  INSERT INTO brh.projeto (nome, responsavel, inicio)
+  VALUES (p_nome_projeto, p_responsavel_projeto, SYSDATE);
+
+  -- Exibe uma mensagem de sucesso
+  DBMS_OUTPUT.PUT_LINE('Projeto inserido com sucesso!');
+EXCEPTION
+  WHEN OTHERS THEN
+    -- Exibe a mensagem de erro
+    DBMS_OUTPUT.PUT_LINE('Erro: ' || SQLERRM);
+END;
+/
+
+-- Testando a procedure brh.insere_projeto com um nome de projeto válido
+BEGIN
+  brh.insere_projeto('TESTE2', 'F123');
+ END;
+/
+-- Testando a procedure brh.insere_projeto com um nome de projeto inválido
+BEGIN
+  brh.insere_projeto('T', 'F123');
+ END;
+/
+
+SELECT * FROM BRH.PROJETO;
+
