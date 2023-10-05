@@ -97,6 +97,47 @@ END;
 SELECT brh.calcula_idade(TO_DATE('10-12-2070', 'DD-MM-YYYY')) AS IDADE FROM DUAL;
 
 
+-- atribuir colaborador
+
+SELECT * FROM BRH.ATRIBUICAO;
+
+CREATE OR REPLACE PROCEDURE brh.define_atribuicao (
+    p_colaborador_matricula brh.colaborador.matricula%type,
+    p_projeto_id brh.projeto.id%type,
+    p_papel_id brh.papel.id%type
+)
+IS
+    v_colaborador_matricula brh.colaborador.matricula%type;
+    v_projeto_id brh.projeto.id%type;
+    v_papel_id brh.papel.id%type;
+BEGIN
+    
+    SELECT nome INTO v_colaborador_matricula FROM brh.colaborador WHERE brh.colaborador.matricula = p_colaborador_matricula;
+    SELECT nome INTO v_projeto_id FROM brh.projeto WHERE brh.projeto.id = p_projeto_id;
+    SELECT nome INTO v_papel_id FROM brh.papel WHERE brh.papel.id = p_papel_id;
+
+   
+    INSERT INTO brh.atribuicao (colaborador, projeto, papel)
+    VALUES (p_colaborador_matricula, p_projeto_id, p_papel_id);
+    
+    COMMIT;
+    
+    DBMS_OUTPUT.PUT_LINE('Atribuição cadastrada com sucesso:');
+    DBMS_OUTPUT.PUT_LINE('Colaborador: ' || v_colaborador_matricula);
+    DBMS_OUTPUT.PUT_LINE('Projeto: ' || v_projeto_id);
+    DBMS_OUTPUT.PUT_LINE('Papel: ' || v_papel_id);
+EXCEPTION
+   
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Não foi possível cadastrar a atribuição. Um ou mais registros não existem:');
+        DBMS_OUTPUT.PUT_LINE('Colaborador: ' || p_colaborador_matricula);
+        DBMS_OUTPUT.PUT_LINE('Projeto: ' || p_projeto_id);
+        DBMS_OUTPUT.PUT_LINE('Papel: ' || p_papel_id);
+END;
+
+SELECT * FROM BRH.ATRIBUICAO;
+
+   EXECUTE define_atribuicao('A124',7, 2);
 
 
 
