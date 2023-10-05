@@ -59,10 +59,10 @@ CREATE OR REPLACE PROCEDURE brh.insere_projeto
 (p_NOME BRH.PROJETO.NOME%type
 ,p_RESPONSAVEL BRH.PROJETO.RESPONSAVEL%type)
 IS
+
 BEGIN
     
     IF LENGTH(p_NOME) <= 2 THEN
-    
         DBMS_OUTPUT.PUT_LINE('O nome do projeto deve ter mais de 2 caracteres.');
     ELSE
     
@@ -74,7 +74,7 @@ BEGIN
     
 END;
 
-EXECUTE brh.insere_projeto('teste', 'T123');
+EXECUTE brh.insere_projeto('t', 'T123');
 
 
 
