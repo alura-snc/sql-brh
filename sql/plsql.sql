@@ -6,7 +6,7 @@ GRANT connect, resource TO brh;
 alter user brh account lock;
 
 SELECT * FROM BRH.PROJETO;
-
+-- insere projeto
 CREATE OR REPLACE PROCEDURE brh.insere_projeto
 (p_NOME BRH.PROJETO.NOME%type
 ,p_RESPONSAVEL BRH.PROJETO.RESPONSAVEL%type)
@@ -18,7 +18,7 @@ BEGIN
 END;
 EXECUTE brh.insere_projeto('NOV2', 'T123');
 
-
+-- idade
 
 CREATE OR REPLACE FUNCTION brh.calcula_idade(p_data_nascimento DATE)
 RETURN NUMBER
@@ -33,6 +33,33 @@ BEGIN
 END;
 
 SELECT brh.calcula_idade(TO_DATE('10-12-1970', 'DD-MM-YYYY')) AS IDADE FROM DUAL;
+
+SELECT * FROM BRH.PROJETO;
+
+-- finaliza projeto
+CREATE OR REPLACE FUNCTION brh.finaliza_projeto(p_id_projeto brh.projeto.id%type)
+RETURN brh.projeto.fim%type
+IS
+    v_data_fim brh.projeto.fim%type;
+BEGIN
+    UPDATE brh.projeto
+    SET brh.projeto.fim = SYSDATE
+    WHERE id = p_id_projeto AND brh.projeto.fim IS NULL;
+    v_data_fim := SYSDATE;
+    COMMIT;
+    RETURN v_data_fim;
+END;
+BEGIN
+brh.finaliza_projeto(47);
+END;
+
+
+
+
+
+
+
+
 
 
 
