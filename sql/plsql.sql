@@ -53,7 +53,7 @@ BEGIN
 brh.finaliza_projeto(47);
 END;
 
-
+-- alterar insere projetos
 
 CREATE OR REPLACE PROCEDURE brh.insere_projeto
 (p_NOME BRH.PROJETO.NOME%type
@@ -75,6 +75,26 @@ BEGIN
 END;
 
 EXECUTE brh.insere_projeto('t', 'T123');
+
+
+-- alterar a calcula idade
+
+CREATE OR REPLACE FUNCTION brh.calcula_idade(p_data_nascimento DATE)
+RETURN NUMBER
+IS
+    v_idade NUMBER;
+BEGIN
+    IF (p_data_nascimento > SYSDATE) THEN
+        DBMS_OUTPUT.PUT_LINE('Impossivel calcular, data inválida.' || TO_CHAR(p_data_nascimento, 'DD-MM-YYYY'));
+    ELSE
+        SELECT TRUNC(months_between(sysdate, p_data_nascimento) / 12)
+        INTO v_idade
+        FROM DUAL;
+        RETURN v_idade;
+   
+END;
+
+SELECT brh.calcula_idade(TO_DATE('10-12-2070', 'DD-MM-YYYY')) AS IDADE FROM DUAL;
 
 
 
