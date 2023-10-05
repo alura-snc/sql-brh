@@ -20,3 +20,20 @@ EXECUTE brh.insere_projeto('NOV2', 'T123');
 
 
 
+CREATE OR REPLACE FUNCTION brh.calcula_idade(p_data_nascimento DATE)
+RETURN NUMBER
+IS
+    v_idade NUMBER;
+BEGIN
+    SELECT TRUNC(months_between(sysdate, p_data_nascimento) / 12)
+    INTO v_idade
+    FROM DUAL;
+
+    RETURN v_idade;
+END;
+
+SELECT brh.calcula_idade(TO_DATE('10-12-1970', 'DD-MM-YYYY')) AS IDADE FROM DUAL;
+
+
+
+
