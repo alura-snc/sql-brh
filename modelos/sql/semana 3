@@ -1,32 +1,18 @@
 **********************
 Filtrar Dependentes
 **********************
-### Ordenação Colaborador
  select
     brh.c.nome as "Colaborador",
     brh.d.nome as "Dependente",
-    to_char(data_nascimento, 'MM') as "Mês_Nascimento"
+    brh.d.data_nascimento as "Mês_Nascimento"
     from 
     brh.colaborador c
     inner join
     brh.dependente d
     on brh.d.colaborador = brh.c.matricula
     where to_char(data_nascimento, 'MM') in (04, 05, 06) or brh.d.nome like '%h%'
-    order by "Colaborador"
+    order by "Colaborador", "Dependente"
     
-### Ordenaçãor Dependente
-   select
-      brh.c.nome as "Colaborador",
-      brh.d.nome as "Dependente",
-      to_char(data_nascimento, 'MM') as "Mês_Nascimento"
-      from 
-      brh.colaborador c
-      inner join
-      brh.dependente d
-      on brh.d.colaborador = brh.c.matricula
-      where to_char(data_nascimento, 'MM') in (04, 05, 06) or brh.d.nome like '%h%'
-      order by "Dependente"
-
 ***********************************
 ### Colaborador com maior salário
 ***********************************
@@ -50,7 +36,7 @@ select matricula, nome, salario,
             else 'Corpo diretor'
     end as senioridade         
 from brh.colaborador
-order by senioridade
+order by senioridade, nome
 
 ***************************
 Colaboradores em Projetos
@@ -68,21 +54,32 @@ on brh.c.matricula = brh.a.colaborador
 inner join brh.projeto p
 on brh.a.projeto = brh.p.id
 group by d.nome, p.nome
-order by projeto
+order by departamento, projeto
 
 ************************************
 Colaboradores com mais dependentes
 ************************************
 
-select * from (
-    select brh.c.nome as "colaborador", count(*) as contagem
-    from brh.colaborador c
+select * from(
+    select 
+    brh.c.nome as colaborador,
+    count(*) as numero_dependente
+    from brh.colaborador c 
     inner join brh.dependente d
     on brh.d.colaborador = brh.c.matricula
     group by c.nome)
-where contagem >= 2
-order by contagem desc;
-ou order by "colaborador"
+where numero_dependente >=2
+order by numero_dependente desc, colaborador
+
+ou
+select brh.c.nome as colaborador,
+count(*) as numero_dependente
+from brh.colaborador c 
+inner join brh.dependente d
+on brh.d.colaborador = brh.c.matricula
+group by c.nome
+having count(*)>=2
+order by numero_dependente desc, colaborador
 
 ************************************
            Faixa etária
@@ -94,8 +91,9 @@ parentesco, colaborador,
 trunc(months_between(sysdate, data_nascimento)/12)as idade,
 case when trunc(months_between(sysdate, data_nascimento)/12) < 18 then 'Menor idade'
     else 'Maior idade'
-end as faixa etária
+end as faixa_etaria
 from brh.dependente
+order by colaborador, nome
 
 ***************************
 Listagem de Colaboradores
