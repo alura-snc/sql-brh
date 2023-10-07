@@ -81,6 +81,7 @@ inner join brh.papel pa
 on brh.a.papel = brh.pa.id
 left join brh.dependente de
 on brh.c.matricula = brh.de.colaborador
+order by brh.p.nome, brh.c.nome, brh.d.nome
 
 
 
