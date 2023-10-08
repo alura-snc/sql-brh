@@ -80,3 +80,27 @@ END;
 
 
 --_______________________________________________________________________________________
+
+--  Validar cálculo de idade
+--  Alterando a função brh.calcula_idade para não permitir datas inválidas;
+
+CREATE OR REPLACE FUNCTION  brh.calcula_idade
+(
+    p_DATA_NASCIMENTO IN  DATE
+)
+RETURN NUMBER
+IS
+    v_IDADE NUMBER;
+BEGIN
+    IF p_DATA_NASCIMENTO >= SYSDATE OR p_DATA_NASCIMENTO IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Impossível calcular idade! Data inválida: '|| p_DATA_NASCIMENTO);
+    ELSE    
+        v_IDADE := TRUNC(MONTHS_BETWEEN (SYSDATE, p_DATA_NASCIMENTO)/12);
+        return v_IDADE;
+    END IF;
+END;
+
+
+--_______________________________________________________________________________________
+
+
