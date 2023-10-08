@@ -103,4 +103,42 @@ END;
 
 --_______________________________________________________________________________________
 
+--  Criar procedure define_atribuicao
+--  Criando uma procedure para inserir um colaborador num projeto em um determinado papel
 
+CREATE OR REPLACE PROCEDURE brh.define_atribuicao
+(
+    p_NOME_COLABORADOR  IN BRH.COLABORADOR.NOME%TYPE,
+    p_NOME_PROJETO      IN BRH.PROJETO.NOME%TYPE,
+    p_PAPEL             IN BRH.PAPEL.NOME%TYPE
+)
+IS
+    v_EXISTE_COLABORADOR NUMBER;
+    v_EXISTE_PROJETO NUMBER;
+    v_EXISTE_PAPEL NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO v_EXISTE_COLABORADOR FROM BRH.COLABORADOR WHERE NOME = p_NOME_COLABORADOR;
+    SELECT COUNT(*) INTO v_EXISTE_PROJETO FROM BRH.PROJETO WHERE NOME = p_NOME_PROJETO;
+    SELECT COUNT(*) INTO v_EXISTE_PAPEL FROM BRH.PAPEL WHERE NOME = p_PAPEL;
+    
+    IF v_EXISTE_COLABORADOR = 0 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Colaborador inexistente: ' || p_NOME_COLABORADOR);
+    ELSIF v_EXISTE_PROJETO = 0 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Projeto inexistente: ' || p_NOME_PROJETO);
+    ELSIF v_EXISTE_PAPEL = 0 THEN
+        INSERT INTO BRH.PAPEL (NOME) VALUES (p_PAPEL);
+        INSERT INTO BRH.ATRIBUICAO VALUES 
+        (
+            (SELECT MATRICULA   FROM BRH.COLABORADOR WHERE NOME = p_NOME_COLABORADOR),
+            (SELECT ID          FROM BRH.PROJETO     WHERE NOME = p_NOME_PROJETO),
+            (SELECT ID          FROM BRH.PAPEL       WHERE NOME = p_PAPEL)
+        );     
+    ELSE
+        INSERT INTO BRH.ATRIBUICAO VALUES 
+        (
+            (SELECT MATRICULA   FROM BRH.COLABORADOR WHERE NOME = p_NOME_COLABORADOR),
+            (SELECT ID          FROM BRH.PROJETO     WHERE NOME = p_NOME_PROJETO),
+            (SELECT ID          FROM BRH.PAPEL       WHERE NOME = p_PAPEL)
+        );
+    END IF;        
+END;
