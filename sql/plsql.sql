@@ -35,3 +35,22 @@ END;
 
 
 --_______________________________________________________________________________________
+
+--  Criar função finaliza_projeto
+--  Criando uma função para registrar o término da execução de um projeto
+
+CREATE OR REPLACE FUNCTION  brh.finaliza_projeto
+(
+    p_ID IN BRH.PROJETO.ID%TYPE
+)
+RETURN DATE
+IS
+    v_FIM DATE;
+BEGIN
+    v_FIM := TO_DATE(SYSDATE, 'DD/MM/YYYY');
+    UPDATE BRH.PROJETO SET FIM = v_FIM WHERE ID = p_ID;
+    RETURN v_FIM;
+END;
+
+
+--_______________________________________________________________________________________
