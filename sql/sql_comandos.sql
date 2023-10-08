@@ -1,3 +1,4 @@
+-- SEMANA 2
 -- inserir novo colaborador
 INSERT INTO brh.papel (
     id,
@@ -262,6 +263,7 @@ ORDER BY
 
 COMMIT;
 
+-- SEMANA 3
 --1 Filtrar dependentes:
 SELECT
     brh.colaborador.nome AS colaborador,
@@ -391,4 +393,5 @@ COMMIT;
 --8 Relatório de plano de saúde; fazer conta de %, classificar, case when
 --9 Listar colaboradores que participaram de todos os projetos: 
 
-
+-- SEMANA 4
+-- 
