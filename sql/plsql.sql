@@ -25,10 +25,25 @@ END calcula_idade;
 
 SELECT calcula_idade(TO_DATE('18-02-1993', 'DD-MM-YYYY')) AS idade FROM DUAL; -- Testar Função
 
+-- Criar função finaliza_projeto
+CREATE OR REPLACE FUNCTION finaliza_projeto(
+    p_id_projeto IN NUMBER
+) 
+RETURN DATE
+IS
+    v_data_finalizacao DATE;
+BEGIN
+    v_data_finalizacao := SYSDATE;
+    UPDATE brh.projeto
+    SET fim = v_data_finalizacao
+    WHERE id = p_id_projeto;    
+    RETURN v_data_finalizacao;
+END finaliza_projeto;
 
-
-
-
-
-
-    
+DECLARE -- Testar Função
+    v_projeto_id NUMBER := 5; 
+    v_data_final DATE;
+BEGIN    
+    v_data_final := finaliza_projeto(v_projeto_id);    
+    DBMS_OUTPUT.PUT_LINE('Data de finalização do projeto: ' || TO_CHAR(v_data_final, 'DD/MM/YYYY HH24:MI:SS'));
+END;
