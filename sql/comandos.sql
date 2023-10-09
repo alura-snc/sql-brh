@@ -203,6 +203,4 @@ select * from colaborador
 order by nome
 offset(10) rows fetch next 10 rows only
 
-          
-      
 
