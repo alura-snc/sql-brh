@@ -27,6 +27,27 @@ end;
 
 select fc_calcularidade(to_date('9/10/1979','DD/MM/YYYY')) as "IDADE" from dual;
 
+--Criar função finaliza_projeto 
+create or replace function fc_finalizarProjeto(p_idProjeto in projeto.id%type)
+return projeto.fim%type
+is
+v_dataFinalizacao projeto.fim%type;
+begin
+v_dataFinalizacao:=sysdate;
+update projeto
+set fim=v_datafinalizacao
+where id=p_idProjeto;
+return v_datafinalizacao;
+end;
+
+set serveroutput on
+declare
+v_dataEncerramentoProjeto varchar2(16);
+begin
+v_dataEncerramentoProjeto:= to_char(fc_finalizarProjeto(27),'DD/MM/YYYY HH:MI');
+dbms_output.put_line(v_dataencerramentoprojeto);
+commit;
+end;
 
 
 
