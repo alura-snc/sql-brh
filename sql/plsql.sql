@@ -63,3 +63,19 @@ BEGIN
     END IF;
 END insere_projeto;
 
+-- Validar cálculo de idade
+CREATE OR REPLACE FUNCTION calcula_idade (
+    data_nascimento IN DATE
+) RETURN NUMBER IS
+    idade NUMBER;
+BEGIN
+    IF data_nascimento IS NULL OR data_nascimento >= SYSDATE THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Impossível calcular idade! Data inválida: ' || TO_CHAR(data_nascimento, 'DD-MON-YYYY'));
+    ELSE
+        idade := TRUNC(MONTHS_BETWEEN(SYSDATE, data_nascimento) / 12);
+        RETURN idade;
+    END IF;
+END calcula_idade;
+
+
+
