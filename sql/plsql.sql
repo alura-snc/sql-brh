@@ -47,3 +47,19 @@ BEGIN
     v_data_final := finaliza_projeto(v_projeto_id);    
     DBMS_OUTPUT.PUT_LINE('Data de finalização do projeto: ' || TO_CHAR(v_data_final, 'DD/MM/YYYY HH24:MI:SS'));
 END;
+
+-- Validar novo projeto
+CREATE OR REPLACE PROCEDURE brh.insere_projeto (
+    id_projeto NUMBER,
+    nome_projeto VARCHAR2,
+    responsavel_projeto VARCHAR2
+) AS
+BEGIN    
+    IF LENGTH(nome_projeto) < 2 OR nome_projeto IS NULL THEN        
+        RAISE_APPLICATION_ERROR(-20001, 'Nome de projeto inválido! Deve ter dois ou mais caracteres.');
+    ELSE        
+        INSERT INTO brh.projeto (id, nome, responsavel, inicio)
+        VALUES (id_projeto, nome_projeto, responsavel_projeto, SYSDATE);
+    END IF;
+END insere_projeto;
+
