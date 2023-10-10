@@ -77,5 +77,50 @@ BEGIN
     END IF;
 END calcula_idade;
 
+-- Criar procedure define_atribuicao
+CREATE OR REPLACE PROCEDURE define_atribuicao (
+    p_nome_colaborador VARCHAR2,
+    p_nome_projeto VARCHAR2,
+    p_nome_papel VARCHAR2
+) AS
+    v_colaborador_id brh.colaborador.matricula%TYPE;
+    v_projeto_id brh.projeto.id%TYPE;
+    v_papel_id brh.papel.id%TYPE;
+BEGIN
+    -- Verificar se o colaborador existe
+    SELECT matricula INTO v_colaborador_id
+    FROM brh.colaborador
+    WHERE nome = p_nome_colaborador;
 
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Colaborador inexistente: ' || p_nome_colaborador);
+    
+    -- Verificar se o projeto existe
+    SELECT id INTO v_projeto_id
+    FROM brh.projeto
+    WHERE nome = p_nome_projeto;
+
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Projeto inexistente: ' || p_nome_projeto);
+    
+    -- Verificar se o papel existe ou criar um novo papel
+    BEGIN
+        SELECT id INTO v_papel_id
+        FROM brh.papel
+        WHERE nome = p_nome_papel;
+        
+        EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            -- Criar novo papel
+            INSERT INTO brh.papel (nome)
+            VALUES (p_nome_papel)
+            RETURNING id INTO v_papel_id;
+    END;
+
+    -- Inserir atribuição
+    INSERT INTO brh.atribuicao (colaborador, projeto, papel)
+    VALUES (v_colaborador_id, v_projeto_id, v_papel_id);
+END define_atribuicao;
 
