@@ -127,3 +127,22 @@ IS
 BEGIN
     INSERT INTO BRH.PROJETO (NOME, RESPONSAVEL, INICIO) VALUES (p_NOME, p_RESPONSAVEL, SYSDATE);
 END;
+
+--Criar função calcula_idade
+--Crie a function brh.calcula_idade, que informa a idade a partir de uma data:
+--Parâmetros da function:
+--Data: date com a data de referência para calcular a idade.
+--Retorno da function:
+--Deve retornar um número inteiro com a idade.
+--Utilize a função MONTHS_BETWEEN para calcular a idade.
+CREATE OR REPLACE FUNCTION brh.calcula_idade
+(p_DATA DATE)
+RETURN INT
+IS
+v_IDADE INT;
+BEGIN
+    v_IDADE := TRUNC(MONTHS_BETWEEN(SYSDATE, p_DATA) / 12);
+    RETURN v_IDADE;
+END;
+
+SELECT brh.calcula_idade('26/04/1986') FROM DUAL
