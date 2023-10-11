@@ -116,3 +116,14 @@ SELECT CPF, NOME, TO_DATE(DATA_NASCIMENTO,'DD/MM/YYYY') AS DATA_NASCIMENTO, PARE
 END) AS FAIXA_ETARIA
 FROM BRH.DEPENDENTE 
 ORDER BY COLABORADOR, NOME
+
+--Crie a procedure brh.insere_projeto para cadastrar um novo projeto na base de dados:
+--Parâmetros da procedure:
+--Nome do projeto: varchar com nome do novo projeto.
+--Resposável do projeto: varchar com a matrícula do colaborador responsável.
+CREATE OR REPLACE PROCEDURE brh.insere_projeto
+(p_NOME IN BRH.PROJETO.NOME%type, p_RESPONSAVEL IN BRH.PROJETO.RESPONSAVEL%type)
+IS
+BEGIN
+    INSERT INTO BRH.PROJETO (NOME, RESPONSAVEL, INICIO) VALUES (p_NOME, p_RESPONSAVEL, SYSDATE);
+END;
