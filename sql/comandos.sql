@@ -146,3 +146,21 @@ BEGIN
 END;
 
 SELECT brh.calcula_idade('26/04/1986') FROM DUAL
+
+
+--Criar função finaliza_projeto
+--Crie a function brh.finaliza_projeto para registrar o término da execução de um projeto:
+--Parâmetros da function:
+--ID do projeto: number com identificador do projeto a ser finalizado.
+--Retorno da function:
+--Deve retornar a data de finalização atribuída ao projeto.
+--A data fim do projeto deve ser a data e hora atual;
+CREATE OR REPLACE FUNCTION brh.finaliza_projeto
+(p_ID IN BRH.PROJETO.ID%type)
+RETURN BRH.PROJETO.FIM%type
+IS
+    v_DATA_FIM BRH.PROJETO.FIM%type;
+BEGIN
+    UPDATE brh.PROJETO SET brh.PROJETO.FIM = SYSDATE WHERE ID = p_ID;
+    RETURN v_DATA_FIM;
+END;
