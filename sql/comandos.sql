@@ -164,3 +164,19 @@ BEGIN
     UPDATE brh.PROJETO SET brh.PROJETO.FIM = SYSDATE WHERE ID = p_ID;
     RETURN v_DATA_FIM;
 END;
+
+
+--Validar novo projeto
+--Altere a procedure brh.insere_projeto para não permitir cadastrar projetos inválidos;
+--O nome do novo do projeto deve ter duas ou mais letras:
+--Se tiver menos caracteres, ou for null, lance uma exceção com a mensagem "Nome de projeto inválido! Deve ter dois ou mais caracteres.".
+--Use a função LENGTH para descobrir o tamanho do texto.
+CREATE OR REPLACE PROCEDURE brh.insere_projeto
+(p_NOME IN BRH.PROJETO.NOME%type, p_RESPONSAVEL IN BRH.PROJETO.RESPONSAVEL%type)
+IS
+BEGIN
+    IF LENGTH(p_NOME) >= 2 THEN
+        INSERT INTO BRH.PROJETO (NOME, RESPONSAVEL, INICIO) VALUES (p_NOME, p_RESPONSAVEL, SYSDATE);
+    ELSE dbms_output.put_line('Nome de projeto inválido! Deve ter dois ou mais caracteres.'); 
+    END IF;
+END;
