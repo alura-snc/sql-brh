@@ -107,3 +107,20 @@ ON
     AND TC.tipo = 'M'
 ORDER BY
     "Nome do Colaborador";
+
+-- Listar colaboradores com mais dependentes
+SELECT
+  C.nome AS "Nome do Colaborador",
+  COUNT(D.colaborador) AS "Quantidade de Dependentes"
+FROM
+  brh.colaborador C
+LEFT JOIN
+  brh.dependente D
+ON 
+  C.matricula = D.colaborador
+GROUP BY
+  C.matricula, C.nome
+HAVING
+  COUNT(D.colaborador) >= 2
+ORDER BY
+  COUNT(D.colaborador) DESC, "Nome do Colaborador" ASC;
