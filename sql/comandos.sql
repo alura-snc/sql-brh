@@ -124,3 +124,19 @@ HAVING
   COUNT(D.colaborador) >= 2
 ORDER BY
   COUNT(D.colaborador) DESC, "Nome do Colaborador" ASC;
+
+-- Relatório de dependentes menores de idade
+SELECT
+  C.nome AS "Nome do Colaborador",
+  D.nome AS "Nome do(a) Filho(a)",
+  TRUNC(MONTHS_BETWEEN(SYSDATE, D.data_nascimento) / 12) AS "Idade do(a) Filho(a)"
+FROM
+  brh.colaborador C
+JOIN
+  brh.dependente D
+ON 
+  C.matricula = D.colaborador
+WHERE
+  TRUNC(MONTHS_BETWEEN(SYSDATE, D.data_nascimento) / 12) < 18
+ORDER BY
+  C.nome, D.nome;
