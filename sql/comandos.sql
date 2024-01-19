@@ -48,3 +48,20 @@ WHERE
 ORDER BY
   C.nome;
  
+-- Filtrar Dependentes
+SELECT
+  C.nome AS "Nome do Colaborador",
+  D.nome AS "Nome do Dependente",
+  D.parentesco AS "Parentesco",
+  D.data_nascimento AS "Data de Nascimento do Dependente"
+FROM
+  brh.colaborador C
+JOIN
+  brh.dependente D
+ON 
+  C.matricula = D.colaborador
+WHERE
+  (EXTRACT(MONTH FROM D.data_nascimento) IN (4, 5, 6) OR D.nome LIKE '%h%')
+ORDER BY
+  D.nome;
+
