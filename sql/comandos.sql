@@ -137,8 +137,9 @@ ORDER BY
    
 
 
---TAREFA 8 - Criando relatï¿½rio de dependentes menores de idade
+--TAREFA 8 - Criando relatório de dependentes menores de idade
 --Crinado uma consulta que liste a matricula do colaborador, o nome do dependente e a idade do dependente.
+--Somente os menores de idade
 
 SELECT 
     COLABORADOR AS "MATRICULA DO COLABORADOR",
