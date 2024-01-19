@@ -53,3 +53,21 @@ SELECT C.nome AS "NOME DO COLABORADOR", D.nome AS "NOME DO DEPENDENTE",
 D.data_nascimento AS "DATA DE NASCIMENTO DO DEPENDENTE", D.PARENTESCO  
 FROM BRH.COLABORADOR C JOIN BRH.DEPENDENTE D ON  D.COLABORADOR = C.MATRICULA
 WHERE D.PARENTESCO = 'Cônjuge'
+
+
+
+--TAREFA 3 - Filtrando dependentes
+-- Criando consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome. 
+-- Ordenando pelo nome do colaborador, depois pelo nome do dependente
+
+SELECT 
+    C.NOME AS COLABORADOR, 
+    D.NOME AS DEPENDETE,
+    D.DATA_NASCIMENTO AS "DATA DE NASCIMENTO"
+FROM BRH.DEPENDENTE D
+    INNER JOIN 
+        BRH.COLABORADOR C ON C.MATRICULA = D.COLABORADOR       
+WHERE
+   (LOWER (D.NOME)) LIKE '%h%' OR
+   EXTRACT(MONTH from D.DATA_NASCIMENTO) BETWEEN 4 and 6
+ORDER BY C.NOME, D.NOME;
