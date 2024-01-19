@@ -1,6 +1,9 @@
+-- Novo Bairro para endereço
+INSERT INTO brh.endereco (cep, uf, cidade, bairro) VALUES ('11015-003', 'SP', 'Santos', 'Vila Mathias');
+
 -- Novo Colaborador
 INSERT INTO brh.colaborador (matricula, nome, cpf, salario, departamento, cep, logradouro, complemento_endereco) 
-VALUES ('A124', 'Guilherme', '368.174.850-02', '10000.00', 'DEPTI', '11015-003', 'Av. Conselheiro NÃ©bias', '309');
+VALUES ('A124', 'Guilherme', '368.174.850-02', 10000, 'DEPTI', '11015-003', 'Av. Conselheiro Nébias', '309');
 
 -- Novos Telefones: Celular ('M'), Residencial ('R') e Corporativo ('C').
 INSERT INTO brh.telefone_colaborador (colaborador, numero, tipo) 
@@ -28,3 +31,20 @@ VALUES (5, 'BI', 'A124', to_date('2023-09-25', 'yyyy-mm-dd'), null);
 
 -- Papel do Colaborador no Projeto BI
 INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (5, 'A124', 1);
+
+-- Relatório de Cônjuges
+SELECT
+  C.nome AS "Nome do Colaborador",
+  D.nome AS "Nome do Cônjuge",
+  D.data_nascimento AS "Data de Nascimento do Cônjuge"
+FROM
+  brh.colaborador C
+JOIN
+  brh.dependente D
+ON 
+  C.matricula = D.colaborador
+WHERE
+  D.parentesco = 'CÃ´njuge'
+ORDER BY
+  C.nome;
+ 
