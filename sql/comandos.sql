@@ -134,4 +134,18 @@ GROUP BY
 HAVING (COUNT(*)) >= 2
 ORDER BY
    "QUANTIDADE DE DEPENDENTES" DESC, C.NOME;
+   
+
+
+--TAREFA 8 - Criando relat�rio de dependentes menores de idade
+--Crinado uma consulta que liste a matricula do colaborador, o nome do dependente e a idade do dependente.
+
+SELECT 
+    COLABORADOR AS "MATRICULA DO COLABORADOR",
+    NOME AS "NOME DO DEPENDENTE",
+    TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12) AS IDADE
+FROM 
+    BRH.DEPENDENTE
+WHERE
+    TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12) < 18;
 
