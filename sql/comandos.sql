@@ -115,3 +115,23 @@ FROM BRH.COLABORADOR C
 JOIN BRH.TELEFONE_COLABORADOR T ON T.COLABORADOR = C.MATRICULA AND T.TIPO = 'M' OR T.TIPO = 'C'
 JOIN BRH.EMAIL_COLABORADOR E ON  E.COLABORADOR = C.MATRICULA AND E.TIPO = 'T'
 ORDER BY (C.NOME);
+
+
+--TAREFA 7 - Criando lista de colaboradores com mais dependentes
+-- Criar consulta que liste nome do colaborador e a quantidade de dependentes que ele possui;
+-- No relatório deve ter somente colaboradores com 2 ou mais dependentes.
+-- Ordenar consulta pela quantidade de dependentes em ordem decrescente, e colaborador crescente
+
+SELECT 
+    C.NOME,
+    COUNT(*) AS "QUANTIDADE DE DEPENDENTES"
+FROM
+    BRH.DEPENDENTE D
+INNER JOIN
+    BRH.COLABORADOR C ON D.COLABORADOR = C.MATRICULA
+GROUP BY 
+    C.NOME
+HAVING (COUNT(*)) >= 2
+ORDER BY
+   "QUANTIDADE DE DEPENDENTES" DESC, C.NOME;
+
