@@ -104,3 +104,14 @@ SELECT
 FROM
     BRH.COLABORADOR
 ORDER BY SENIORIDADE, NOME;
+
+
+
+--TAREFA 6 - Criando Relatório de contatos
+--Criando uma consulta que liste o nome do Colaborador, telefones do Colaborador e email de trabalho do Colaborador  e ordenado pelo nome do colaborador.
+
+SELECT C.nome AS "COLABORADOR",T.numero AS "TELEFONES", T.TIPO AS "TIPO DE TELEFONE" , E.Email AS "EMAIL COORPORATIVO"
+FROM BRH.COLABORADOR C 
+JOIN BRH.TELEFONE_COLABORADOR T ON T.COLABORADOR = C.MATRICULA AND T.TIPO = 'M' OR T.TIPO = 'C'
+JOIN BRH.EMAIL_COLABORADOR E ON  E.COLABORADOR = C.MATRICULA AND E.TIPO = 'T'
+ORDER BY (C.NOME);
