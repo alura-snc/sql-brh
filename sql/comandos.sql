@@ -149,4 +149,44 @@ FROM
     BRH.DEPENDENTE
 WHERE
     TRUNC((MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO))/12) < 18;
+    
+    
+        
+--TAREFA 9 - Criando relatório analítico de equipes 
+-- Crie uma consulta que liste:
+    --O nome do Departamento;
+    --O nome do chefe do Departamento;
+    --O nome do Colaborador;
+    --O nome do Projeto que ele está alocado;
+    --O nome do papel desempenhado por ele;
+    --O número de telefone do Colaborador;
+    --O nome do Dependente do Colaborador.
+    --ordenado pelo nome do nome do projeto, nome do colaborador e nome do dependente.
+
+SELECT 
+    D.NOME AS DEPARTAMENTO, 
+    CF.NOME AS "CHEFE DO DEPARTAMENTO", 
+    C.NOME AS COLABORADOR,
+    P.NOME AS "NOME DO PROJETO",
+    PL.NOME AS "PAPEL DO COLABORADOR",
+    T.NUMERO AS "TELEFONE DO COLABORADOR",
+    DC.NOME AS "DEPENDENTE DO COLABORADOR"
+FROM BRH.DEPARTAMENTO D
+INNER JOIN
+    BRH.COLABORADOR C ON C.DEPARTAMENTO = D.SIGLA
+INNER JOIN
+    BRH.COLABORADOR CF ON CF.MATRICULA = D.CHEFE  AND CF.DEPARTAMENTO = D.SIGLA
+INNER JOIN
+    BRH.ATRIBUICAO A ON A.COLABORADOR = C.MATRICULA
+INNER JOIN
+    BRH.PROJETO P ON P.ID = A.PROJETO
+INNER JOIN
+    BRH.PAPEL PL ON PL.ID = A.PAPEL
+INNER JOIN
+    BRH.TELEFONE_COLABORADOR T ON T.COLABORADOR = C.MATRICULA
+INNER JOIN
+    BRH.DEPENDENTE DC ON DC.COLABORADOR = C.MATRICULA
+WHERE
+    T.TIPO ='M'
+ORDER BY P.NOME,C.NOME,DC.NOME;
 
