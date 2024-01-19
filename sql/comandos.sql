@@ -183,3 +183,21 @@ ON
     C2.matricula = DP.colaborador
 ORDER BY
     "Nome do Projeto", "Nome do Colaborador", "Nome do Dependente";
+
+-- Listar quantidade de colaboradores em projetos
+SELECT 
+    d.nome AS "Nome do Departamento",
+    p.nome AS "Nome do Projeto",
+    COUNT(a.colaborador) AS "Quantidade de Colaboradores"
+FROM 
+    brh.atribuicao a
+JOIN 
+    brh.projeto p ON a.projeto = p.id
+JOIN 
+    brh.colaborador c ON a.colaborador = c.matricula
+JOIN 
+    brh.departamento d ON c.departamento = d.sigla
+GROUP BY 
+    d.nome, p.nome
+ORDER BY 
+    d.nome, p.nome;
