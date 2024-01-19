@@ -140,3 +140,46 @@ WHERE
   TRUNC(MONTHS_BETWEEN(SYSDATE, D.data_nascimento) / 12) < 18
 ORDER BY
   C.nome, D.nome;
+
+-- Relatório Anílitico de Equipes
+SELECT
+    D.nome AS "Nome do Departamento",
+    C1.nome AS "Nome do Chefe do Departamento",
+    C2.nome AS "Nome do Colaborador",
+    P.nome AS "Nome do Projeto",
+    PA.nome AS "Nome do Papel",
+    TC.numero AS "Número de Telefone",
+    DP.nome AS "Nome do Dependente"
+FROM
+    brh.departamento D
+LEFT JOIN
+    brh.colaborador C1
+ON
+    D.chefe = C1.matricula
+LEFT JOIN
+    brh.colaborador C2
+ON
+    D.sigla = C2.departamento
+LEFT JOIN
+    brh.atribuicao A
+ON
+    C2.matricula = A.colaborador
+LEFT JOIN
+    brh.projeto P
+ON
+    A.projeto = P.id
+LEFT JOIN
+    brh.papel PA
+ON
+    A.papel = PA.id
+LEFT JOIN
+    brh.telefone_colaborador TC
+ON
+    C2.matricula = TC.colaborador
+    AND TC.tipo = 'M' 
+LEFT JOIN
+    brh.dependente DP
+ON
+    C2.matricula = DP.colaborador
+ORDER BY
+    "Nome do Projeto", "Nome do Colaborador", "Nome do Dependente";
