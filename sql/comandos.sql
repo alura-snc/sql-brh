@@ -74,3 +74,16 @@ FROM
 WHERE
   salario = (SELECT MAX(salario) FROM brh.colaborador);
 
+-- Relatório de Senioridade
+SELECT
+    matricula, nome, salario,
+    CASE
+        WHEN salario <= 3000 THEN 'Junior'
+        WHEN salario <= 6000 THEN 'Pleno'
+        WHEN salario <= 20000 THEN 'Sênior'
+        ELSE 'Corpo Diretor'
+    END AS nivel_senioridade
+FROM
+    brh.colaborador
+ORDER BY 
+    nivel_senioridade, nome;
