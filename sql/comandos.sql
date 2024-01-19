@@ -190,3 +190,26 @@ WHERE
     T.TIPO ='M'
 ORDER BY P.NOME,C.NOME,DC.NOME;
 
+
+
+--TAREFA 10 - Criando relatório que liste  a quantidade de colaboradores em projetos
+-- Criando consulta que liste o nome do departamento, nome do projeto e quantos colaboradores daquele departamento fazem parte do projeto
+-- Ordenando a consulta pelo nome do departamento e nome do projeto
+
+SELECT
+    D.NOME AS DEPARTAMENTO,
+    P.NOME AS PROJETO,
+    COUNT(*) AS "QUANTIDADE DE COLABORADORES"
+FROM
+    BRH.DEPARTAMENTO D
+INNER JOIN
+    BRH.COLABORADOR C ON C.DEPARTAMENTO = D.SIGLA
+INNER JOIN
+    BRH.ATRIBUICAO A ON A.COLABORADOR = C.MATRICULA
+INNER JOIN
+    BRH.PROJETO P ON P.ID = A.PROJETO
+GROUP BY 
+    D.NOME, P.NOME
+ORDER BY 
+    D.NOME, P.NOME;
+
