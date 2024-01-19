@@ -65,3 +65,12 @@ WHERE
 ORDER BY
   D.nome;
 
+-- Listar colaborador com maior salário
+SELECT
+  nome AS "Nome do Colaborador",
+  salario AS "Salário"
+FROM
+  brh.colaborador
+WHERE
+  salario = (SELECT MAX(salario) FROM brh.colaborador);
+
