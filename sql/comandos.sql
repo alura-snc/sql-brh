@@ -1,3 +1,18 @@
+/*Inserir novo colaborador
+Cadastrar o novo colaborador Fulano de Tal no novo projeto BI para exercer o papel de Especialista de Negócios.
+
+Informações sobre o colaborador
+Possui o telefone celular (61) 9 9999-9999;
+Possui o telefone residencial (61) 3030-4040;
+Email pessoal é fulano@email.com;
+Email de trabalho será é fulano.tal@brh.com;
+Possui dois dependentes:
+Filha Beltrana de Tal;
+Esposa Cicrana de Tal.
+Atenção
+Você deve escolher os valores dos demais campos para o colaborador, dependentes e projeto;
+Atenção à ordem em que os registros devem ser inseridos.*/
+
 INSERT INTO brh.COLABORADOR
 (MATRICULA, CPF, NOME, SALARIO, DEPARTAMENTO, CEP, LOGRADOURO, COMPLEMENTO_ENDERECO)
 VALUES
@@ -48,135 +63,65 @@ INSERT INTO BRH.DEPENDENTE
 VALUES
 ('123.374.375-45', 'Cilana de Tal', TO_DATE('11/09/2020','DD/MM/YYYY'),'Filho(a)', 'A234');
 
-SELECT SIGLA, NOME
-FROM BRH.DEPARTAMENTO
-ORDER BY NOME
+/*Atualizar cadastro de colaborador
+A colaboradora Maria se casou e precisa que seus dados sejam atualizados na base.
 
+Informações sobre o colaborador
+Nome de casada: Maria Mendonça;
+Email: maria.mendonca@email.com;*/
 
-SELECT B.NOME AS NOME_COLABORADOR, A.NOME AS NOME_DEPENDENTE, A.DATA_NASCIMENTO
-FROM BRH.DEPENDENTE A INNER JOIN BRH.COLABORADOR B
-ON A.COLABORADOR = B.MATRICULA
-WHERE EXTRACT(Month FROM A.DATA_NASCIMENTO) IN (4,5,6) AND (A.NOME LIKE '%H%' OR A.NOME LIKE '%h%')
-ORDER BY NOME_COLABORADOR, NOME_DEPENDENTE;
+UPDATE BRH.COLABORADOR SET NOME = 'Maria Mendonça'
+WHERE MATRICULA = 'M123';
 
+UPDATE BRH.EMAIL_COLABORADOR SET EMAIL = 'maria.mendonca@email.com'
+WHERE COLABORADOR = 'M123' AND TIPO = 'P';
+
+/*Relatório de cônjuges
+Crie uma consulta que liste:
+matricula do colaborador;
+nome do dependente;
+data de nascimento do dependente.*/
+
+SELECT COLABORADOR, NOME AS "NOME-DEPENDENTE", DATA_NASCIMENTO
+FROM BRH.DEPENDENTE;
+
+/*Relatório de contatos telefônicos
+Crie uma consulta que liste:
+matricula do colaborador;
+número de telefone.
+A consulta deve listar somente telefones móveis ou comerciais;
+O resultado deve ser ordenado pela matrícula do colaborador e pelo número do telefone.*/
+
+SELECT COLABORADOR AS "MATRICULA-COLABORADOR", NUMERO, TIPO
+FROM BRH.TELEFONE_COLABORADOR
+WHERE TIPO IN ('M','C')
+ORDER BY "MATRICULA-COLABORADOR", NUMERO;
+
+/*Excluir departamento SECAP
+O departamento SECAP não é mais parte da nossa organização, e todos os colaboradores serão dispensados (somente para fins didáticos).
+Remova o departamento SECAP da base de dados;*/
 DELETE FROM BRH.DEPARTAMENTO WHERE SIGLA = 'SECAP';
 
+/*Relatório de departamentos
+Crie uma consulta que liste a sigla e o nome do departamento;
+A consulta deve listar somente os colaboradores que:
+morem no CEP 71777-700;
+trabalhem nos departamentos SECAP ou SESEG.
+O resultado da consulta deve ser ordenado pelo nome do departamento.*/
+SELECT A.SIGLA, A.NOME
+FROM BRH.DEPARTAMENTO A INNER JOIN BRH.COLABORADOR B
+ON A.SIGLA = B.DEPARTAMENTO
+WHERE (B.CEP = '71777-700') AND (B.DEPARTAMENTO IN ('SECAP','SESEG'))
+ORDER BY A.NOME;
 
---Filtrar dependentes
-SELECT B.NOME AS NOME_COLABORADOR, A.NOME AS NOME_DEPENDENTE, A.DATA_NASCIMENTO
-FROM BRH.DEPENDENTE A INNER JOIN BRH.COLABORADOR B
-ON A.COLABORADOR = B.MATRICULA
-WHERE EXTRACT(Month FROM A.DATA_NASCIMENTO) IN (4,5,6) AND (A.NOME LIKE '%H%' OR A.NOME LIKE '%h%')
-ORDER BY NOME_COLABORADOR, NOME_DEPENDENTE;
+/*DESAFIO
+Relatório de dependentes menores de idade
+Crie uma consulta que liste:
+a matrícula do colaborador;
+o nome do dependente;
+e a idade do dependente (não a data de nascimento)
+A consulta deve listar somente os colaboradores que são menores de idade em relação à data atual. */
 
---Listar colaborador com maior salário
-SELECT NOME, SALARIO
-FROM BRH.COLABORADOR
-WHERE SALARIO IN 
-(SELECT MAX(SALARIO)
-FROM BRH.COLABORADOR)
-
---Relatório de senioridade
-SELECT MATRICULA, NOME, SALARIO,
-(CASE
-    WHEN SALARIO <= 3000 THEN 'JÚNIOR'
-    WHEN SALARIO > 3000 AND SALARIO <= 6000 THEN 'PLENO'
-    WHEN SALARIO > 6000 AND SALARIO <= 20000 THEN 'SÊNIOR' 
-    ELSE 'CORPO DIRETOR'
-END) AS SENIORIDADE
-FROM BRH.COLABORADOR
-ORDER BY SENIORIDADE, NOME
-
---Listar colaboradores em projetos
--- O RESULTADO NÃO FICOU IGUAL AO DA IMAGEM DO TRELLO.
-CREATE VIEW VW_DEPTO_COLABORADOR AS
-SELECT DEP.NOME AS NOME_DEPTO, DEP.SIGLA AS SIGLA, COLAB.MATRICULA AS MATRICULA_COLABORADOR
-FROM BRH.DEPARTAMENTO DEP INNER JOIN BRH.COLABORADOR COLAB
-ON DEP.SIGLA = COLAB.DEPARTAMENTO
-
-SELECT VW.NOME_DEPTO, PROJ.NOME AS NOME_PROJETO, COUNT(VW.MATRICULA_COLABORADOR)
-FROM BRH.PROJETO PROJ INNER JOIN VW_DEPTO_COLABORADOR VW
-ON PROJ.RESPONSAVEL = VW.MATRICULA_COLABORADOR
-GROUP BY VW.NOME_DEPTO, PROJ.NOME
-
---Listar colaboradores com mais dependentes
-SELECT  COLAB.NOME, COUNT(DEP.CPF)
-FROM BRH.COLABORADOR COLAB INNER JOIN BRH.DEPENDENTE DEP
-ON COLAB.MATRICULA = DEP.COLABORADOR
-GROUP BY COLAB.NOME
-HAVING COUNT(DEP.CPF) >= 2
-ORDER BY COUNT(DEP.CPF) DESC, COLAB.NOME
-
---Listar faixa etária dos dependentes
-SELECT CPF, NOME, TO_DATE(DATA_NASCIMENTO,'DD/MM/YYYY') AS DATA_NASCIMENTO, PARENTESCO, COLABORADOR,   
-        TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) AS IDADE,
-(CASE
-    WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) < 18 THEN 'MENOR DE IDADE'
-    ELSE 'MAIOR DE IDADE'
-END) AS FAIXA_ETARIA
-FROM BRH.DEPENDENTE 
-ORDER BY COLABORADOR, NOME
-
---Crie a procedure brh.insere_projeto para cadastrar um novo projeto na base de dados:
---Parâmetros da procedure:
---Nome do projeto: varchar com nome do novo projeto.
---Resposável do projeto: varchar com a matrícula do colaborador responsável.
-CREATE OR REPLACE PROCEDURE brh.insere_projeto
-(p_NOME IN BRH.PROJETO.NOME%type, p_RESPONSAVEL IN BRH.PROJETO.RESPONSAVEL%type)
-IS
-BEGIN
-    INSERT INTO BRH.PROJETO (NOME, RESPONSAVEL, INICIO) VALUES (p_NOME, p_RESPONSAVEL, SYSDATE);
-END;
-
---Criar função calcula_idade
---Crie a function brh.calcula_idade, que informa a idade a partir de uma data:
---Parâmetros da function:
---Data: date com a data de referência para calcular a idade.
---Retorno da function:
---Deve retornar um número inteiro com a idade.
---Utilize a função MONTHS_BETWEEN para calcular a idade.
-CREATE OR REPLACE FUNCTION brh.calcula_idade
-(p_DATA DATE)
-RETURN INT
-IS
-v_IDADE INT;
-BEGIN
-    v_IDADE := TRUNC(MONTHS_BETWEEN(SYSDATE, p_DATA) / 12);
-    RETURN v_IDADE;
-END;
-
-SELECT brh.calcula_idade('26/04/1986') FROM DUAL
-
-
---Criar função finaliza_projeto
---Crie a function brh.finaliza_projeto para registrar o término da execução de um projeto:
---Parâmetros da function:
---ID do projeto: number com identificador do projeto a ser finalizado.
---Retorno da function:
---Deve retornar a data de finalização atribuída ao projeto.
---A data fim do projeto deve ser a data e hora atual;
-CREATE OR REPLACE FUNCTION brh.finaliza_projeto
-(p_ID IN BRH.PROJETO.ID%type)
-RETURN BRH.PROJETO.FIM%type
-IS
-    v_DATA_FIM BRH.PROJETO.FIM%type;
-BEGIN
-    UPDATE brh.PROJETO SET brh.PROJETO.FIM = SYSDATE WHERE ID = p_ID;
-    RETURN v_DATA_FIM;
-END;
-
-
---Validar novo projeto
---Altere a procedure brh.insere_projeto para não permitir cadastrar projetos inválidos;
---O nome do novo do projeto deve ter duas ou mais letras:
---Se tiver menos caracteres, ou for null, lance uma exceção com a mensagem "Nome de projeto inválido! Deve ter dois ou mais caracteres.".
---Use a função LENGTH para descobrir o tamanho do texto.
-CREATE OR REPLACE PROCEDURE brh.insere_projeto
-(p_NOME IN BRH.PROJETO.NOME%type, p_RESPONSAVEL IN BRH.PROJETO.RESPONSAVEL%type)
-IS
-BEGIN
-    IF LENGTH(p_NOME) >= 2 THEN
-        INSERT INTO BRH.PROJETO (NOME, RESPONSAVEL, INICIO) VALUES (p_NOME, p_RESPONSAVEL, SYSDATE);
-    ELSE dbms_output.put_line('Nome de projeto inválido! Deve ter dois ou mais caracteres.'); 
-    END IF;
-END;
+SELECT COLABORADOR AS "MATRICULA-COLABORADOR", NOME, TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) AS IDADE
+FROM BRH.DEPENDENTE
+WHERE TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) < 18
