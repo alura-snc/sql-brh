@@ -1,86 +1,106 @@
-﻿INSERT INTO colaborador (matricula, nome, cpf, salario, departamento, cep, logradouro, complemento_endereco) 
+-- Inserir novo colaborador
+
+INSERT INTO brh.colaborador (matricula, nome, cpf, salario, departamento, cep, logradouro, complemento_endereco)
     VALUES ('AA123', 'Catarina', '222.333.444-55', '10000', 'DEPTI', '71111-100', 'Avenida das Pirambóias', 'Apto 233');
 
-INSERT INTO telefone_colaborador (colaborador, numero, tipo) 
+INSERT INTO brh.telefone_colaborador (colaborador, numero, tipo)
     VALUES ('AA123', '(61) 9 9999-9999', 'M');
 
-INSERT INTO telefone_colaborador (colaborador, numero, tipo) 
+INSERT INTO brh.telefone_colaborador (colaborador, numero, tipo)
     VALUES ('AA123', '(61) 3030-4040', 'R');
 
-INSERT INTO email_colaborador (colaborador, email, tipo) 
+INSERT INTO brh.email_colaborador (colaborador, email, tipo)
     VALUES ('AA123', 'catarina@email.com', 'P');
 
-INSERT INTO email_colaborador (colaborador, email, tipo) 
+INSERT INTO brh.email_colaborador (colaborador, email, tipo)
     VALUES ('AA123', 'catarina.cat@brh.com', 'T');
 
-INSERT INTO dependente (cpf, colaborador, nome, parentesco, data_nascimento) 
+INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento)
     VALUES ('123.123.123-44', 'AA123', 'Melissa', 'Filho(a)', to_date('2020-01-01', 'yyyy-mm-dd'));
 
-INSERT INTO dependente (cpf, colaborador, nome, parentesco, data_nascimento) 
+INSERT INTO brh.dependente (cpf, colaborador, nome, parentesco, data_nascimento)
     VALUES ('124.124.124-44', 'AA123', 'Samantha', 'Cônjuge', to_date('1980-01-01', 'yyyy-mm-dd'));
 
-INSERT INTO papel (id, nome) VALUES (8, 'Especialista de Negócios');
+INSERT INTO brh.papel (id, nome) VALUES (8, 'Especialista de Negócios');
 
-INSERT INTO projeto (id, nome, responsavel, inicio, fim) VALUES (5, 'BI', 'AA123', to_date('2023-01-01', 'yyyy-mm-dd'), null);
+INSERT INTO brh.projeto (id, nome, responsavel, inicio, fim) VALUES (5, 'BI', 'AA123', to_date('2023-01-01', 'yyyy-mm-dd'), null);
 
-INSERT INTO atribuicao (projeto, colaborador, papel) VALUES (5, 'AA123', 8);
+INSERT INTO brh.atribuicao (projeto, colaborador, papel) VALUES (5, 'AA123', 8);
 
-SELECT nome FROM colaborador 
+
+-- Atualizar cadastro de colaborador
+
+-- Checar como está o registro antes da mudança
+SELECT nome FROM brh.colaborador
 	WHERE matricula = 'M123';
-
-SELECT email FROM email_colaborador 
+SELECT email FROM brh.email_colaborador
 	WHERE colaborador = 'M123';
 
-UPDATE colaborador 
-	SET nome = 'Maria Mendonça' 
+-- Alterar o nome do colaborador
+UPDATE brh.colaborador
+	SET nome = 'Maria Mendonça'
 	WHERE matricula = 'M123';
 
-UPDATE email_colaborador 
-	SET email = 'maria.mendonca@email.com' 
+-- Alterar o e-mail do colaborador
+UPDATE brh.email_colaborador
+	SET email = 'maria.mendonca@email.com'
 	WHERE colaborador = 'M123' AND tipo = 'P';
 
-SELECT nome FROM colaborador 
+-- Checar como ficou o registro após a mudança
+SELECT nome FROM brh.colaborador
 	WHERE matricula = 'M123';
-
-SELECT email FROM email_colaborador 
+SELECT email FROM brh.email_colaborador
 	WHERE colaborador = 'M123';
 
-SELECT colaborador AS matricula , nome, data_nascimento FROM dependente 
+
+-- Relatório de cônjuges
+
+SELECT colaborador AS matricula , nome, data_nascimento FROM brh.dependente
 	WHERE parentesco = 'Cônjuge';
 
-SELECT colaborador AS matricula, numero FROM telefone_colaborador 
-	WHERE tipo <> 'R' 
+
+-- Relatório de contatos telefônicos
+
+SELECT colaborador AS matricula, numero FROM brh.telefone_colaborador
+	WHERE tipo <> 'R'
 	ORDER BY colaborador, numero;
 
-SELECT * FROM colaborador 
+
+-- Excluir departamento SECAP
+
+-- Checando os colaboradores que vão ser dispensados
+SELECT * FROM brh.colaborador
     WHERE departamento = 'SECAP';
 
-DELETE FROM telefone_colaborador 
-	WHERE colaborador IN ( 
-	SELECT * FROM colaborador 
+-- Excluíndo registros de contatos
+DELETE FROM brh.telefone_colaborador
+	WHERE colaborador IN (
+	SELECT * FROM brh.colaborador
+    	WHERE departamento = 'SECAP');
+DELETE FROM brh.email_colaborador
+	WHERE colaborador IN (
+	SELECT * FROM brh.colaborador
+    	WHERE departamento = 'SECAP');
+DELETE FROM brh.dependente
+	WHERE colaborador IN (
+	SELECT * FROM brh.colaborador
     	WHERE departamento = 'SECAP');
 
-DELETE FROM email_colaborador 
-	WHERE colaborador IN ( 
-	SELECT * FROM colaborador 
-    	WHERE departamento = 'SECAP');
-
-DELETE FROM dependente 
-	WHERE colaborador IN ( 
-	SELECT * FROM colaborador 
-    	WHERE departamento = 'SECAP');
-
-DELETE FROM colaborador 
+-- Excluindo os registros dos colaboradores dispensados
+DELETE FROM brh.colaborador
 	WHERE departamento = 'SECAP';
 
-DELETE FROM departamento 
+-- Excluindo o registro do departamento extinto
+DELETE FROM brh.departamento
 	WHERE sigla = 'SECAP';
 
-SELECT * FROM colaborador 
+-- Checando se os registros foram excluídos
+SELECT * FROM brh.colaborador
     WHERE departamento = 'SECAP';
 
-SELECT departamento AS sigla, nome FROM colaborador 
-	WHERE cep = '71777-700' AND departamento IN ('SECAP', 'SESEG') 
+
+-- Relatório de departamentos
+
+SELECT departamento AS sigla, nome FROM brh.colaborador
+	WHERE cep = '71777-700' AND departamento IN ('SECAP', 'SESEG')
 	ORDER BY departamento;
-
-
