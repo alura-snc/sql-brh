@@ -125,3 +125,78 @@ A consulta deve listar somente os colaboradores que são menores de idade em rel
 SELECT COLABORADOR AS "MATRICULA-COLABORADOR", NOME, TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) AS IDADE
 FROM BRH.DEPENDENTE
 WHERE TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) < 18
+
+
+/*SEMANA 3
+Filtrar dependentes
+Criar uma consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome.;
+Ordene primeiramente pelo nome do colaborador, depois pelo nome do dependente. */
+
+SELECT B.NOME AS NOME_COLABORADOR, A.NOME AS NOME_DEPENDENTE, A.DATA_NASCIMENTO
+FROM BRH.DEPENDENTE A INNER JOIN BRH.COLABORADOR B
+ON A.COLABORADOR = B.MATRICULA
+WHERE EXTRACT(Month FROM A.DATA_NASCIMENTO) IN (4,5,6) AND (A.NOME LIKE '%H%' OR A.NOME LIKE '%h%')
+ORDER BY NOME_COLABORADOR, NOME_DEPENDENTE;
+
+/*Listar colaborador com maior salário
+Criar consulta que liste nome e o salário do colaborador com o maior salário;
+OBS.: A consulta deve ser flexível para continuar funcionando caso surja algum funcionário com salário maior que o do Zico.*/
+SELECT NOME, SALARIO
+FROM BRH.COLABORADOR
+WHERE SALARIO IN 
+(SELECT MAX(SALARIO)
+FROM BRH.COLABORADOR)
+
+/*Relatório de senioridade
+A senioridade dos colaboradores é determinada pela faixa salarial:
+
+Júnior: até R$ 3.000,00;
+Pleno: R$ 3.000,01 a R$ 6.000,00;
+Sênior: R$ 6.000,01 a R$ 20.000,00;
+Corpo diretor: acima de R$ 20.000,00.
+Criar uma consulta que liste a matrícula, nome, salário, e nível de senioridade do colaborador;
+Ordene a listagem por senioridade e por nome. */
+SELECT MATRICULA, NOME, SALARIO,
+(CASE
+    WHEN SALARIO <= 3000 THEN 'JÚNIOR'
+    WHEN SALARIO > 3000 AND SALARIO <= 6000 THEN 'PLENO'
+    WHEN SALARIO > 6000 AND SALARIO <= 20000 THEN 'SÊNIOR' 
+    ELSE 'CORPO DIRETOR'
+END) AS SENIORIDADE
+FROM BRH.COLABORADOR
+ORDER BY SENIORIDADE, NOME
+
+/*Listar quantidade de colaboradores em projetos
+Criar consulta que liste o nome do departamento, nome do projeto e quantos colaboradores daquele departamento fazem parte do projeto;
+Ordene a consulta pelo nome do departamento e nome do projeto. */
+SELECT A.NOME AS DEPTO, C.NOME AS PROJETO, COUNT(B.MATRICULA)
+FROM BRH.DEPARTAMENTO A INNER JOIN BRH.COLABORADOR B
+ON A.SIGLA = B.DEPARTAMENTO INNER JOIN BRH.PROJETO C
+ON C.RESPONSAVEL = B.MATRICULA
+GROUP BY A.NOME, C.NOME
+
+/*Listar colaboradores com mais dependentes
+Criar consulta que liste nome do colaborador e a quantidade de dependentes que ele possui;
+No relatório deve ter somente colaboradores com 2 ou mais dependentes.
+Ordenar consulta pela quantidade de dependentes em ordem decrescente, e colaborador crescente. */
+SELECT  COLAB.NOME, COUNT(DEP.CPF)
+FROM BRH.COLABORADOR COLAB INNER JOIN BRH.DEPENDENTE DEP
+ON COLAB.MATRICULA = DEP.COLABORADOR
+GROUP BY COLAB.NOME
+HAVING COUNT(DEP.CPF) >= 2
+ORDER BY COUNT(DEP.CPF) DESC, COLAB.NOME
+
+/*Listar faixa etária dos dependentes
+Criar consulta que liste o CPF do dependente, o nome do dependente, a data de nascimento (formato brasileiro), 
+parentesco, matrícula do colaborador, a idade do dependente e sua faixa etária;
+Se o dependente tiver menos de 18 anos, informar a faixa etária Menor de idade;
+Se o dependente tiver 18 anos ou mais, informar faixa etária Maior de idade;
+Ordenar consulta por matrícula do colaborador e nome do dependente.*/
+SELECT CPF, NOME, TO_DATE(DATA_NASCIMENTO,'DD/MM/YYYY') AS DATA_NASCIMENTO, PARENTESCO, COLABORADOR,   
+        TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) AS IDADE,
+(CASE
+    WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, DATA_NASCIMENTO)/12) < 18 THEN 'MENOR DE IDADE'
+    ELSE 'MAIOR DE IDADE'
+END) AS FAIXA_ETARIA
+FROM BRH.DEPENDENTE 
+ORDER BY COLABORADOR, NOME
