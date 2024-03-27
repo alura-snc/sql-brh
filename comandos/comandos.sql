@@ -1,4 +1,5 @@
-/*Inserir novo colaborador
+/*Semana 2
+Inserir novo colaborador
 Fulano de Tal no novo projeto BI para exercer o papel de Especialista de Negócios.
 
 Informações sobre o colaborador
@@ -234,9 +235,7 @@ Sintaxe TRUNC( <date_or_time_expr>, <date_or_time_part> )
 MONTH: arredonda para o início do mês
 DAY: arredonda para o início do dia
 HOUR: arredonda para o início da hora
-MINUTE: arredonda para o início do minuto
-
-FIM ATIVIDADES SEMANA 2*/
+MINUTE: arredonda para o início do minuto*/
 
 SELECT * FROM brh.dependente;
 SELECT * FROM brh.colaborador;
@@ -244,7 +243,109 @@ SELECT * FROM brh.colaborador;
 SELECT colaborador 
 AS "MATRÍCULA DO COLABORADOR", nome 
 AS "NOME DO DEPENDENTE", 
-TRUNC(MONTHS_BETWEEN(SYSDATE, data_nascimento)/12) 
+TRUNC(MONTHS_BETWEEN(SYSDATE, data_nascimento)/12)
 AS "IDADE" FROM brh.dependente;
 
+/*ou outro exemplo*/
+
+SELECT colaborador, nome, TRUNC (MONTHS_BETWEEN(SYSDATE, data_nascimento)/12)
+AS idade FROM brh.dependente
+WHERE TRUNC (MONTHS_BETWEEN(SYSDATE, data_nascimento)/12) <18
+
+FIM ATIVIDADES Semana 2*/
+
+/*Semana 3
+Filtrar dependentes
+Criar uma consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome.;
+Regras de aceitação:Ordene primeiramente pelo nome do colaborador, depois pelo nome do dependente.*/
+
+
+/*Listar colaborador com maior salário
+Criar consulta que liste nome e o salário do colaborador com o maior salário;
+OBS.: A consulta deve ser flexível para continuar funcionando caso surja algum funcionário com salário maior que o do Zico.*/
+
+/*Relatório de senioridade
+A senioridade dos colaboradores é determinada pela faixa salarial:
+Júnior: até R$ 3.000,00;
+Pleno: R$ 3.000,01 a R$ 6.000,00;
+Sênior: R$ 6.000,01 a R$ 20.000,00;
+Corpo diretor: acima de R$ 20.000,00.
+Tarefa
+Criar uma consulta que liste a matrícula, nome, salário, e nível de senioridade do colaborador;
+Regras de aceitação
+Ordene a listagem por senioridade e por nome.
+Exemplo da saída pode ser vista no anexo abaixo.*/
+
+
+/*Listar quantidade de colaboradores em projetos
+Criar consulta que liste o nome do departamento, nome do projeto e quantos colaboradores daquele departamento fazem parte do projeto;
+Regras de aceitação
+Ordene a consulta pelo nome do departamento e nome do projeto.
+A saída deve ser igual à imagem anexa abaixo.*/
+
+
+/*Listar colaboradores com mais dependentes
+Criar consulta que liste nome do colaborador e a quantidade de dependentes que ele possui;
+Regras de aceitação
+No relatório deve ter somente colaboradores com 2 ou mais dependentes.
+Ordenar consulta pela quantidade de dependentes em ordem decrescente, e colaborador crescente.
+A saída deve ser igual à imagem anexa abaixo*/
+
+/*Relatório analítico de equipes
+Crie uma consulta que liste:
+O nome do Departamento;
+O nome do chefe do Departamento;
+O nome do Colaborador;
+O nome do Projeto que ele está alocado;
+O nome do papel desempenhado por ele;
+O número de telefone do Colaborador;
+O nome do Dependente do Colaborador.
+Faça commit do arquivo.
+Regras de aceitação
+O resultado deve ser ordenado pelo nome do nome do projeto, nome do colaborador e nome do dependente.*/
+
+/*Listar faixa etária dos dependentes
+Criar consulta que liste o CPF do dependente, o nome do dependente, a data de nascimento (formato brasileiro), parentesco, matrícula do colaborador, a idade do dependente e sua faixa etária;
+Regras de aceitação
+Se o dependente tiver menos de 18 anos, informar a faixa etária Menor de idade;
+Se o dependente tiver 18 anos ou mais, informar faixa etária Maior de idade;
+Ordenar consulta por matrícula do colaborador e nome do dependente.*/
+
+/*Paginar listagem de colaboradores
+Contexto
+O usuário quer paginar a listagem de colaboradores em páginas de 10 registros cada. 
+Há 26 colaboradores na base, então há 3 páginas:
+Página 1: da Ana ao João (registros 1 ao 10);
+Página 2: da Kelly à Tati (registros 11 ao 20); e
+Página 3: do Uri ao Zico (registros 21 ao 26).
+Tarefa
+Crie uma consulta que liste a segunda página;
+OBS.: pense que novos registros podem ser inclusos à tabela; logo, a consulta não deve levar em consideração matrícula, etc.
+Regras de aceitação
+Ordene pelo nome do colaborador.*/
+
+/*Desafio
+Relatório de plano de saúde
+O usuário quer saber quanto é a mensalidade que cada colaborador deve pagar ao plano de saúde. As regras de pagamento são:
+Cada nível de senioridade tem um percentual de contribuição diferente:
+Júnior paga 1% do salário;
+Pleno paga 2% do salário;
+Sênior paga 3% do salário;
+Corpo diretor paga 5% do salário.
+Cada tipo de dependente tem um valor adicional diferente:
+Cônjuge acrescenta R$ 100,00 na mensalidade;
+Maior de idade acrescenta R$ 50,00 na mensalidade;
+Menor de idade acrescenta R$ 25,00 na mensalidade.
+O valor a ser pago é a soma do percentual definido pela senioridade mais o valor de cada dependente do colaborador.
+Tarefa
+Crie uma consulta que exiba o relatório desejado pelo usuário;*/
+
+/*Desafio
+Listar colaboradores que participaram de todos os projetos
+Crie um relatório que informe os colaboradores que participaram de todos os projetos;
+OBS.: Pense que novos projetos podem ser cadastrados, então a consulta não deve ser fixada somente aos projetos atuais, mas ser flexível para projetos futuros.
+Dica: essa é a implementação do operador Division da álgebra relacional no SQL. 
+Infelizmente, os bancos não possuem tal operador. 
+Mas a forma mais simples de implementar essa consulta pode ser vista neste post: 
+https://gregorulm.com/relational-division-in-sql-the-easy-way/#:~:text=In relational algebra%2C there is,they are all quite complex.*/
 
