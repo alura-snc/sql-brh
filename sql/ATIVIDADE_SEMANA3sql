@@ -1,0 +1,151 @@
+ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+
+--criar usuario;
+DROP USER brh CASCADE;
+
+--Rodar o aequivo schema;
+-- Conceder privilégio ao user brh para rodar o arquivo carga;
+
+GRANT UNLIMITED TABLESPACE TO brh;
+
+-- Efetuar carga de dados;
+
+--Iniciar Atividades;
+
+-- 01 Filtrar dependentes**********************************
+/* 
+Tarefa
+Criar uma consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" no nome.;
+Adicione o código da consulta em sql/comandos.sql.
+Regras de aceitação
+Ordene primeiramente pelo nome do colaborador, depois pelo nome do dependente.
+*/
+
+SELECT colab.nome AS nome_colaborador, 
+       d.nome AS nome_dependente, 
+       d.data_nascimento                                   
+FROM brh.colaborador c
+INNER JOIN brh.dependente d ON c.matricula = d.colaborador
+WHERE (EXTRACT(MONTH FROM d.data_nascimento) IN (4, 5, 6) OR d.nome LIKE '%h%')
+ORDER BY c.nome, d.nome;
+
+-- 02 Listar colaborador com maior salário  **********************************
+/* 
+Tarefa
+Criar consulta que liste nome e o salário do colaborador com o maior salário;
+Adicione o código da consulta em sql/comandos.sql.
+OBS.: A consulta deve ser flexível para continuar funcionando caso surja algum funcionário com salário maior que o do Zico.
+*/
+
+-- 03 Relatório de senioridade  **********************************
+/* 
+Contexto
+A senioridade dos colaboradores é determinada pela faixa salarial:
+
+Júnior: até R$ 3.000,00;
+Pleno: R$ 3.000,01 a R$ 6.000,00;
+Sênior: R$ 6.000,01 a R$ 20.000,00;
+Corpo diretor: acima de R$ 20.000,00.
+Tarefa
+Criar uma consulta que liste a matrícula, nome, salário, e nível de senioridade do colaborador;
+Adicione o código da consulta em sql/comandos.sql.
+Regras de aceitação
+Ordene a listagem por senioridade e por nome.
+*/
+
+SELECT matricula, 
+       nome, 
+       salario,
+       CASE 
+           WHEN salario <= 3000 THEN 'Júnior'
+           WHEN salario <= 6000 THEN 'Pleno'
+           WHEN salario <= 20000 THEN 'Sênior'
+           ELSE 'Corpo diretor'
+       END AS nivel_senioridade
+FROM brh.colaborador
+ORDER BY 
+    CASE 
+        WHEN salario >= 20000 THEN 1
+        WHEN salario >= 6000 THEN 2
+        WHEN salario >= 3000 THEN 3
+        ELSE 4
+    END,
+    nome;
+    
+-- 04 Listar quantidade de colaboradores em projetos  **********************************
+/* 
+Tarefa
+Criar consulta que liste o nome do departamento, nome do projeto e quantos colaboradores daquele departamento fazem parte do projeto;
+Adicione o código da consulta em sql/comandos.sql.
+Regras de aceitação
+Ordene a consulta pelo nome do departamento e nome do projeto.
+A saída deve ser igual à imagem anexa abaixo.
+*/
+
+SELECT depart.nome AS nome_departamento,
+       proj.nome AS nome_projeto,
+       COUNT(atrib.colaborador) AS quantidade_colaboradores
+FROM brh.departamento depart
+JOIN brh.projeto proj ON proj.responsavel = depart.chefe
+LEFT JOIN brh.atribuicao atrib ON depart.sigla = atrib.colaborador
+GROUP BY depart.nome, proj.nome
+ORDER BY depart.nome, proj.nome;
+    
+-- 05 Listar colaboradores com mais dependentes **********************************
+/* 
+Tarefa
+Criar consulta que liste nome do colaborador e a quantidade de dependentes que ele possui;
+Adicione o código da consulta em sql/comandos.sql.
+Regras de aceitação
+No relatório deve ter somente colaboradores com 2 ou mais dependentes.
+Ordenar consulta pela quantidade de dependentes em ordem decrescente, e colaborador crescente.
+*/
+
+SELECT c.nome AS nome_colaborador, 
+       COUNT(d.cpf) AS quantidade_dependentes
+FROM brh.colaborador c
+JOIN brh.dependente d ON c.matricula = d.colaborador
+GROUP BY c.nome
+HAVING COUNT(d.cpf) >= 2
+ORDER BY quantidade_dependentes DESC, nome_colaborador ASC;
+
+    
+-- 06 Relatório analítico de equipes**********************************
+/* 
+Tarefa
+Crie uma consulta que liste:
+O nome do Departamento
+O nome do chefe do Departamento;
+O nome do Colaborador;
+O nome do Projeto que ele está alocado;
+O nome do papel desempenhado por ele
+O número de telefone do Colaborador;
+O nome do Dependente do Colaborador.
+Adicione o código da consulta em sql/comandos.sql
+Faça commit do arquivo.
+Regras de aceitação
+O resultado deve ser ordenado pelo nome do nome do projeto, nome do colaborador e nome do dependente.
+*/
+
+SELECT dep.nome AS nome_departamento,
+       col.nome AS nome_chefe_departamento,
+       colab.nome AS nome_colaborador,
+       proj.nome AS nome_projeto,
+       pap.nome AS papel_colaborador,
+       tel.numero AS numero_telefone,
+       depen.nome AS nome_dependente
+FROM brh.colaborador colab
+JOIN brh.departamento dep ON colab.departamento = dep.sigla
+JOIN brh.colaborador col ON dep.chefe = col.matricula
+JOIN brh.atribuicao atr ON colab.matricula = atr.colaborador
+JOIN brh.projeto proj ON atr.projeto = proj.id
+JOIN brh.papel pap ON atr.papel = pap.id
+LEFT JOIN brh.telefone_colaborador tel ON colab.matricula = tel.colaborador
+LEFT JOIN brh.dependente depen ON colab.matricula = depen.colaborador
+ORDER BY nome_projeto, nome_colaborador, nome_dependente;
+
+
+
+
+
+
