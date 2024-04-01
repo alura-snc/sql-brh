@@ -214,7 +214,7 @@ from
 where
     colaborador = 'M123'
     and tipo = 'p';
-    
+
 update
     email_colaborador
 set
