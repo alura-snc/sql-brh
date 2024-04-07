@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e59df1ff-3940-43e3-b7ba-a02bebb89228" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/semana 3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Comex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemClientesEtaria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemDeClientes1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemDeClientes2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemDeProdutos.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/ListagemClientesEtaria.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2ehh0iEAt078JOwuu2yOyq4XzC3" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Comex.executor": "Debug",
+    "Application.ListagemClientesEtaria.executor": "Run",
+    "Application.ListagemDeClientes.executor": "Run",
+    "Application.ListagemDeClientes1.executor": "Run",
+    "Application.ListagemDeProdutos.executor": "Run",
+    "Application.Main.executor": "Debug",
+    "Application.listagemDeClientes.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Kesia Dias Freire/Desktop/Alura Senac/sql-brh/comex",
+    "onboarding.tips.debug.path": "C:/Users/Kesia Dias Freire/Desktop/Alura Senac/sql-brh/Semana 3/src/Main.java"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.ListagemClientesEtaria">
+    <configuration name="ListagemClientesEtaria" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ListagemClientesEtaria" />
+      <module name="semana 3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ListagemDeClientes1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ListagemDeClientes1" />
+      <module name="semana 3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ListagemDeClientes2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ListagemDeClientes2" />
+      <module name="semana 3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ListagemDeProdutos" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ListagemDeProdutos" />
+      <module name="semana 3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="listagemDeClientes" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="listagemDeClientes" />
+      <module name="semana 3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ListagemClientesEtaria" />
+        <item itemvalue="Application.ListagemDeClientes1" />
+        <item itemvalue="Application.ListagemDeProdutos" />
+        <item itemvalue="Application.ListagemDeClientes2" />
+        <item itemvalue="Application.listagemDeClientes" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e59df1ff-3940-43e3-b7ba-a02bebb89228" name="Changes" comment="" />
+      <created>1712362501357</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712362501357</updated>
+    </task>
+    <servers />
+  </component>
+</project>
