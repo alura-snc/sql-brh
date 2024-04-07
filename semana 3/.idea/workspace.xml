@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e59df1ff-3940-43e3-b7ba-a02bebb89228" name="Changes" comment="" />
+    <list default="true" id="e59df1ff-3940-43e3-b7ba-a02bebb89228" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/semana 3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Comex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemClientesEtaria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemDeClientes1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemDeClientes2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ListagemDeProdutos.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
