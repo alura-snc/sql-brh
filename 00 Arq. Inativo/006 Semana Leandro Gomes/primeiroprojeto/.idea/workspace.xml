@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="551b1c5e-fe33-4f3d-ab44-cfa0da430f64" name="Changes" comment="Merge remote-tracking branch 'origin/main'">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/CalculadoraArea.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/CalculoFatorial.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ComparadorNumeros.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JogoDaAdivinhacao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Leitura.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Loopnotas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/OutroLoop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ParImpar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Tabuada.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Testandoloop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Testandoloop2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/VerificadorNumero.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Condicional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Condicional.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="sql-brh-LeandroGomesJBQ-" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Leandrogomesjbq&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Leandrogomesjbq/sql-brh-LeandroGomesJBQ.git&quot;,
+    &quot;accountId&quot;: &quot;aa6b018b-5cf0-40b3-b809-9a78b76fb090&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Leandrogomesjbq&quot;,
+    &quot;repository&quot;: &quot;sql-brh-LeandroGomesJBQ&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/Maintestes.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2fW9jlCiJc1hnPTihlojVT3MVGT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CalculadoraArea.executor": "Run",
+    "Application.CalculoFatorial.executor": "Run",
+    "Application.ComparadorNumeros.executor": "Run",
+    "Application.Condicional.executor": "Run",
+    "Application.ConversorTemperatura.executor": "Run",
+    "Application.CriaçãoString.executor": "Run",
+    "Application.Estudos.executor": "Run",
+    "Application.JogoAdivinhacao.executor": "Run",
+    "Application.JogoDaAdivinhacao.executor": "Run",
+    "Application.JogoDaAdivinhação.executor": "Run",
+    "Application.Leitura.executor": "Run",
+    "Application.Loopnotas.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Maintestes.executor": "Run",
+    "Application.MédiaNotasDecimais.executor": "Run",
+    "Application.Operadores.executor": "Run",
+    "Application.OutroLoop.executor": "Run",
+    "Application.ParImpar.executor": "Run",
+    "Application.Perfil.executor": "Run",
+    "Application.Programa.executor": "Run",
+    "Application.Soma.executor": "Run",
+    "Application.Subtrai.executor": "Run",
+    "Application.TESTE.executor": "Run",
+    "Application.Tabuada.executor": "Run",
+    "Application.Testandoloop.executor": "Run",
+    "Application.Testandoloop2.executor": "Run",
+    "Application.UsandoCasting.executor": "Run",
+    "Application.VerificadorNumero.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "sql-brh-LeandroGomesJBQ-",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/legr/Documents/GitHub/sql-brh-LeandroGomesJBQ/006 Semana Leandro Gomes/primeiroprojeto"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\legr\Documents\GitHub\sql-brh-LeandroGomesJBQ\006 Semana Leandro Gomes\primeiroprojeto" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.CalculoFatorial">
+    <configuration name="CalculadoraArea" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CalculadoraArea" />
+      <module name="JavaIntellij" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CalculoFatorial" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CalculoFatorial" />
+      <module name="JavaIntellij" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ComparadorNumeros" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ComparadorNumeros" />
+      <module name="JavaIntellij" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParImpar" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ParImpar" />
+      <module name="JavaIntellij" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tabuada" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Tabuada" />
+      <module name="JavaIntellij" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.CalculoFatorial" />
+        <item itemvalue="Application.ParImpar" />
+        <item itemvalue="Application.Tabuada" />
+        <item itemvalue="Application.CalculadoraArea" />
+        <item itemvalue="Application.ComparadorNumeros" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="551b1c5e-fe33-4f3d-ab44-cfa0da430f64" name="Changes" comment="" />
+      <created>1713906108858</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713906108858</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Merge remote-tracking branch 'origin/main'">
+      <option name="closed" value="true" />
+      <created>1713924854569</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1713924854569</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge remote-tracking branch 'origin/main'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/main'" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/JogoDaAdivinhacao.java</url>
+          <line>3</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
