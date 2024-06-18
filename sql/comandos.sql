@@ -297,3 +297,22 @@ FROM
     INNER JOIN brh.projeto proj ON atrib.projeto = proj.id
 GROUP BY depto.nome, proj.nome
 ORDER BY depto.nome, proj.nome;
+
+
+-- criar uma consulta que liste os dependentes que nasceram em abril, maio ou junho, ou tenham a letra "h" --
+SELECT
+    colab.nome AS nome_colaborador,
+    depen.nome AS nome_dependente,
+    depen.data_nascimento
+FROM
+    brh.dependente depen
+    INNER JOIN brh.colaborador colab ON depen.colaborador = colab.matricula
+WHERE
+    TO_CHAR(depen.data_nascimento, 'MM') IN ('04', '05', '06')
+    OR LOWER(depen.nome) LIKE '%h%'
+ORDER BY
+    colab.nome,
+    depen.nome;
+
+
+
