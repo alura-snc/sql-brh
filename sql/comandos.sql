@@ -388,3 +388,29 @@ GROUP BY
 ORDER BY
     colab.nome;
 
+-- LISTAR COLABORADORES que participam de todos os projetos
+WITH total_projetos AS (
+    SELECT COUNT(*) AS total_projetos FROM brh.projeto
+),
+colaboradores_projetos AS (
+    SELECT
+        colab.matricula,
+        colab.nome AS nome_colaborador,
+        COUNT(DISTINCT atrib.projeto) AS total_projetos_colaborador
+    FROM
+        brh.colaborador colab
+        INNER JOIN brh.atribuicao atrib ON colab.matricula = atrib.colaborador
+    GROUP BY
+        colab.matricula, colab.nome
+)
+SELECT
+    cp.nome_colaborador,
+    cp.matricula
+FROM
+    colaboradores_projetos cp
+    CROSS JOIN total_projetos tp
+WHERE
+    cp.total_projetos_colaborador = tp.total_projetos
+ORDER BY
+    cp.nome_colaborador;
+
