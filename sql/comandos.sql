@@ -330,3 +330,18 @@ FROM
 ORDER BY
     d.colaborador,
     d.nome;
+
+-- PAGINAR LISTAGEM DE COLABORADORES
+WITH paginado AS (
+    SELECT
+        nome,
+        ROW_NUMBER() OVER (ORDER BY nome) AS num_linha
+    FROM
+        brh.colaborador
+)
+SELECT
+    nome
+FROM
+    paginado
+WHERE
+    num_linha BETWEEN 11 AND 20;
