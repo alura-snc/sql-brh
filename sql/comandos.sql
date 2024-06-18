@@ -204,8 +204,7 @@ WHERE
 
 
 -- LISTAR COLABORADORES COM MAIS DEPENDENTES
-SELECT
-    colab.nome AS nome_colaborador,
+SELECT colab.nome AS nome_colaborador,
     COUNT(depen.colaborador) AS quantidade_dependente
 FROM
          brh.colaborador colab
