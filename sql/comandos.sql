@@ -162,10 +162,7 @@ ORDER BY
 SELECT nome, salario FROM brh.colaborador WHERE salario = (SELECT MAX(salario) FROM brh.colaborador);
 
 -- RELATÓRIO DE SENIORIDADE
-SELECT
-    matricula,
-    nome,
-    salario,
+SELECT matricula, nome, salario,
     (
         CASE
             WHEN salario <= 3000 THEN
