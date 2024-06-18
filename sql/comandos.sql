@@ -159,20 +159,7 @@ ORDER BY
 
 
 -- COLABORADOR COM SALÁRIO MAIS ALTO
-SELECT
-    nome,
-    salario
-FROM
-    brh.colaborador
-WHERE
-    salario = (
-        SELECT
-            MAX(salario)
-        FROM
-            brh.colaborador
-    );
-
-
+SELECT nome, salario FROM brh.colaborador WHERE salario = (SELECT MAX(salario) FROM brh.colaborador);
 
 -- RELATÓRIO DE SENIORIDADE
 SELECT
