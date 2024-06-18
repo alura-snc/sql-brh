@@ -298,5 +298,22 @@ ORDER BY
     colab.nome,
     depen.nome;
 
+-- LISTAR COLABORADORS EM PROJETOS
+SELECT
+    depto.nome AS nome_departamento,
+    proj.nome AS nome_projeto,
+    COUNT(atrib.colaborador) AS quantidade_colaboradores
+FROM
+    brh.departamento depto
+    INNER JOIN brh.colaborador colab ON depto.sigla = colab.departamento
+    INNER JOIN brh.atribuicao atrib ON colab.matricula = atrib.colaborador
+    INNER JOIN brh.projeto proj ON atrib.projeto = proj.id
+GROUP BY
+    depto.nome,
+    proj.nome
+ORDER BY
+    depto.nome,
+    proj.nome;
+
 
 
