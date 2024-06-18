@@ -345,3 +345,46 @@ FROM
     paginado
 WHERE
     num_linha BETWEEN 11 AND 20;
+
+-- RELATÓRIO DE PLANO DE SAÚDE
+SELECT
+    colab.nome AS nome_colaborador,
+    colab.salario,
+    (
+        CASE
+            WHEN colab.salario <= 3000 THEN 0.01 * colab.salario -- Júnior paga 1% do salário
+            WHEN colab.salario <= 6000 THEN 0.02 * colab.salario -- Pleno paga 2% do salário
+            WHEN colab.salario <= 20000 THEN 0.03 * colab.salario -- Sênior paga 3% do salário
+            ELSE 0.05 * colab.salario -- Corpo diretor paga 5% do salário
+        END
+    ) AS contribuicao_senioridade,
+    SUM(
+        CASE
+            WHEN depen.parentesco = 'Cônjuge' THEN 100 -- Cônjuge acrescenta R$ 100,00
+            WHEN depen.idade >= 18 THEN 50 -- Maior de idade acrescenta R$ 50,00
+            ELSE 25 -- Menor de idade acrescenta R$ 25,00
+        END
+    ) AS contribuicao_dependentes,
+    (
+        CASE
+            WHEN colab.salario <= 3000 THEN 0.01 * colab.salario
+            WHEN colab.salario <= 6000 THEN 0.02 * colab.salario
+            WHEN colab.salario <= 20000 THEN 0.03 * colab.salario
+            ELSE 0.05 * colab.salario
+        END
+    ) +
+    SUM(
+        CASE
+            WHEN depen.parentesco = 'Cônjuge' THEN 100
+            WHEN depen.idade >= 18 THEN 50
+            ELSE 25
+        END
+    ) AS total_mensalidade
+FROM
+    brh.colaborador colab
+    LEFT JOIN brh.dependente depen ON colab.matricula = depen.colaborador
+GROUP BY
+    colab.nome, colab.salario
+ORDER BY
+    colab.nome;
+
