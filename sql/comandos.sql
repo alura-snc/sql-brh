@@ -157,7 +157,6 @@ ORDER BY
     nome;
 
 
-
 -- COLABORADOR COM SALÁRIO MAIS ALTO
 SELECT nome, salario FROM brh.colaborador WHERE salario = (SELECT MAX(salario) FROM brh.colaborador);
 
@@ -314,5 +313,20 @@ ORDER BY
     depto.nome,
     proj.nome;
 
-
-
+-- LISTAR FAIXA ETÁRIA DOS DEPENDENTES
+SELECT
+    d.cpf AS cpf_dependente,
+    d.nome AS nome_dependente,
+    TO_CHAR(d.data_nascimento, 'DD/MM/YYYY') AS data_nascimento_formatado,
+    d.parentesco,
+    d.colaborador AS matricula_colaborador,
+    TRUNC(MONTHS_BETWEEN(SYSDATE, d.data_nascimento) / 12) AS idade_dependente,
+    CASE
+        WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, d.data_nascimento) / 12) < 18 THEN 'Menor de idade'
+        ELSE 'Maior de idade'
+    END AS faixa_etaria
+FROM
+    brh.dependente d
+ORDER BY
+    d.colaborador,
+    d.nome;
