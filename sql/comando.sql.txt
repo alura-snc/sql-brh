@@ -1,0 +1,66 @@
+-- CADASTRAR CEP
+INSERT INTO system.endereco (cep, uf, cidade, bairro) VALUES ('11111-111', 'SP','São Paulo', 'Tatuape');
+SELECT * FROM system.endereco
+
+-- CADASTRAR NOVO COLABORADOR
+INSERT INTO system.colaborador (matricula, nome, cpf, salario, departamento, cep, logradouro, complemento_endereco) VALUES ('A124', 'Fulano de Tal', '111.111.111-22', '12000', 'DEPTI', '11111-111', 'Rua das Flores', 'Casa 1');
+
+-- CADASTRAR TELEFONES
+INSERT INTO system.telefone_colaborador (colaborador, numero, tipo) VALUES ('A124', '(61) 9 9999-9999;', 'M');
+INSERT INTO system.telefone_colaborador (colaborador, numero, tipo) VALUES ('A124', '(61) 9 3030-4040;', 'R');
+
+-- CADASTRAR EMAIL 
+INSERT INTO system.email_colaborador (colaborador, email, tipo) VALUES ('A124', 'fulano@email.com', 'P');
+INSERT INTO system.email_colaborador (colaborador, email, tipo) VALUES ('A124', 'fulano.tal@system.com', 'T');
+
+-- CADASTRAR DEPENDENTE
+INSERT INTO system.dependente (cpf, colaborador, nome, parentesco, data_nascimento) VALUES ('111.111.111-11', 'A124', 'Beltrana de TaL', 'Filho(a)', to_date('2009-08-09', 'yyyy-mm-dd'));
+INSERT INTO system.dependente (cpf, colaborador, nome, parentesco, data_nascimento) VALUES ('222.222.222-22', 'A124', 'Cicrana de Tal', 'Cônjuge', to_date('1978-10-09', 'yyyy-mm-dd'));
+
+-- CADASTRAR NOVO PROJETO
+INSERT INTO system.projeto (id, nome, responsavel, inicio, fim) VALUES (5, 'BI', 'P123', to_date('2024-03-01', 'yyyy-mm-dd'), to_date('2024-06-10', 'yyyy-mm-dd'));
+
+-- CADASTRAR NOVO PAPEL
+INSERT INTO system.papel (id, nome) VALUES (8, 'Especialista de Negócios');
+
+-- CADASTRAR NOVO COLABORADOR NO PROJETO
+INSERT INTO system.atribuicao (projeto, colaborador, papel) VALUES (5, 'A124', 8);
+
+-- RELATORIO DE DEPARTAMENTO
+SELECT sigla, nome
+FROM system.departamento
+ORDER BY nome
+
+-- RELATORIO DE DEPENDENTE
+SELECT colaborador, nome, data_nascimento, parentesco
+FROM system.dependente
+ORDER BY colaborador, nome
+
+-- EXCLUSAO DE DEPARTAMENTO
+DELETE 
+FROM system.departamento
+WHERE sigla = 'Secap'
+
+-- RELATORIO DE CONTATOS
+SELECT a.matricula, a.nome, b.email, b.tipo AS tipo_email, c.numero, c.tipo AS tipo_telefone
+FROM system.colaborador a
+INNER JOIN system.email_colaborador b
+ON a.matricula = b.colaborador
+INNER JOIN system.telefone_colaborador c
+ON a.matricula = c.colaborador
+WHERE b.tipo = 'T' AND c.tipo = 'M'
+ORDER BY a.nome
+
+
+
+
+-- RELATORIO ANALITICO DE EQUIPES - DESAFIO
+SELECT a.matricula, a.nome AS nome_colaborador, b.nome AS nome_depto, b.chefe, c.nome AS projeto d.nome as nome_dependente, 
+FROM system.colaborador a
+INNER JOIN system.dependente b
+ON a.matricula = b.matricula_colaborador
+INNER join system.departamento c
+ON a.departamento = c.nome
+INNE JOIN 
+
+
