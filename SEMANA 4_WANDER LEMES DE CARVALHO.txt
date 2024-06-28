@@ -1,0 +1,170 @@
+--CARD 1
+-- Cria o arquivo plsql.sql
+-- Código para criar a procedure brh.insere_projeto
+
+CREATE OR REPLACE PROCEDURE brh.insere_projeto (
+    p_nome_projeto VARCHAR2,
+    p_responsavel_projeto VARCHAR2
+) AS
+BEGIN
+    -- Insere um novo registro na tabela brh.projeto
+    INSERT INTO brh.projeto (nome_projeto, responsavel_projeto)
+    VALUES (p_nome_projeto, p_responsavel_projeto);
+    
+    -- Não faz commit, a efetivação da transação deve ser feita por quem invoca a procedure
+END;
+/
+
+
+--CARD 2
+
+-- Adiciona ao arquivo plsql.sql
+-- Código para criar a function brh.calcula_idade
+
+CREATE OR REPLACE FUNCTION brh.calcula_idade (
+    p_data DATE
+) RETURN INTEGER IS
+    v_idade INTEGER;
+BEGIN
+    -- Calcula a idade usando MONTHS_BETWEEN e truncando para obter anos completos
+    v_idade := TRUNC(MONTHS_BETWEEN(SYSDATE, p_data) / 12);
+    
+    RETURN v_idade;
+END;
+/
+
+
+--TESTE
+
+SELECT brh.calcula_idade(TO_DATE('2000-01-01', 'YYYY-MM-DD')) FROM dual;
+
+
+--CARD 3
+-- Adiciona ao arquivo plsql.sql
+-- Código para criar a function brh.finaliza_projeto
+
+CREATE OR REPLACE FUNCTION brh.finaliza_projeto (
+    p_id_projeto NUMBER
+) RETURN DATE IS
+    v_data_fim DATE;
+BEGIN
+    -- Define a data e hora atual como data fim
+    v_data_fim := SYSDATE;
+    
+    -- Atualiza a tabela brh.projeto com a data fim
+    UPDATE brh.projeto
+    SET data_fim = v_data_fim
+    WHERE id_projeto = p_id_projeto;
+    
+    -- Retorna a data fim
+    RETURN v_data_fim;
+    
+    -- Não faz commit, a efetivação da transação deve ser feita por quem invoca a function
+END;
+/
+
+
+--TESTE
+
+SELECT brh.finaliza_projeto(1) FROM dual;
+
+
+--CARD 4
+-- Adiciona ao arquivo plsql.sql
+-- Código para criar/alterar a procedure brh.insere_projeto
+
+CREATE OR REPLACE PROCEDURE brh.insere_projeto (
+    p_nome_projeto VARCHAR2,
+    p_responsavel_projeto VARCHAR2
+) AS
+BEGIN
+    -- Verifica se o nome do projeto é válido
+    IF p_nome_projeto IS NULL OR LENGTH(p_nome_projeto) < 2 THEN
+        -- Lança uma exceção se o nome do projeto for inválido
+        RAISE_APPLICATION_ERROR(-20001, 'Nome de projeto inválido! Deve ter dois ou mais caracteres.');
+    END IF;
+    
+    -- Insere um novo registro na tabela brh.projeto
+    INSERT INTO brh.projeto (nome_projeto, responsavel_projeto)
+    VALUES (p_nome_projeto, p_responsavel_projeto);
+    
+    -- Não faz commit, a efetivação da transação deve ser feita por quem invoca a procedure
+END;
+/
+
+
+--CARD 5 - IMPORTANTE
+
+-- Adiciona ao arquivo plsql.sql
+-- Código para criar/alterar a function brh.calcula_idade
+
+CREATE OR REPLACE FUNCTION brh.calcula_idade (
+    p_data DATE
+) RETURN INTEGER IS
+    v_idade INTEGER;
+BEGIN
+    -- Verifica se a data é inválida (maior que a data atual ou nula)
+    IF p_data IS NULL OR p_data > SYSDATE THEN
+        -- Lança uma exceção se a data for inválida
+        RAISE_APPLICATION_ERROR(-20002, 'Impossível calcular idade! Data inválida: ' || TO_CHAR(p_data, 'YYYY-MM-DD') || '.');
+    END IF;
+    
+    -- Calcula a idade usando MONTHS_BETWEEN e truncando para obter anos completos
+    v_idade := TRUNC(MONTHS_BETWEEN(SYSDATE, p_data) / 12);
+    
+    RETURN v_idade;
+END;
+/
+
+
+--CARD 6 DESAFIO
+
+-- Adiciona ao arquivo plsql.sql
+-- Código para criar a procedure brh.define_atribuicao
+
+CREATE OR REPLACE PROCEDURE brh.define_atribuicao (
+    p_nome_colaborador VARCHAR2,
+    p_nome_projeto VARCHAR2,
+    p_nome_papel VARCHAR2
+) AS
+    v_id_colaborador NUMBER;
+    v_id_projeto NUMBER;
+    v_id_papel NUMBER;
+BEGIN
+    -- Verifica se o colaborador existe
+    SELECT id_colaborador INTO v_id_colaborador
+    FROM brh.colaborador
+    WHERE nome_colaborador = p_nome_colaborador;
+    
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20003, 'Colaborador inexistente: ' || p_nome_colaborador || '.');
+    
+    -- Verifica se o projeto existe
+    SELECT id_projeto INTO v_id_projeto
+    FROM brh.projeto
+    WHERE nome_projeto = p_nome_projeto;
+    
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20004, 'Projeto inexistente: ' || p_nome_projeto || '.');
+    
+    -- Verifica se o papel existe, se não existir, cria um novo papel
+    BEGIN
+        SELECT id_papel INTO v_id_papel
+        FROM brh.papel
+        WHERE nome_papel = p_nome_papel;
+        
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        INSERT INTO brh.papel (nome_papel) VALUES (p_nome_papel)
+        RETURNING id_papel INTO v_id_papel;
+    END;
+    
+    -- Insere a atribuição do colaborador no projeto com o papel
+    INSERT INTO brh.atribuicao (id_colaborador, id_projeto, id_papel)
+    VALUES (v_id_colaborador, v_id_projeto, v_id_papel);
+    
+    -- Não faz commit, a efetivação da transação deve ser feita por quem invoca a procedure
+END;
+/
