@@ -1,0 +1,15 @@
+C:\Users\Junior\source\repos\Comex\Comex\bin\Debug\net8.0\Comex.exe
+C:\Users\Junior\source\repos\Comex\Comex\bin\Debug\net8.0\Comex.deps.json
+C:\Users\Junior\source\repos\Comex\Comex\bin\Debug\net8.0\Comex.runtimeconfig.json
+C:\Users\Junior\source\repos\Comex\Comex\bin\Debug\net8.0\Comex.dll
+C:\Users\Junior\source\repos\Comex\Comex\bin\Debug\net8.0\Comex.pdb
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.AssemblyInfoInputs.cache
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.AssemblyInfo.cs
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.csproj.CoreCompileInputs.cache
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.sourcelink.json
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.dll
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\refint\Comex.dll
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.pdb
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\Comex.genruntimeconfig.cache
+C:\Users\Junior\source\repos\Comex\Comex\obj\Debug\net8.0\ref\Comex.dll

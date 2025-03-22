@@ -1,0 +1,5 @@
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+
+CREATE USER cursoplsql IDENTIFIED BY cursoplsql DEFAULT TABLESPACE USERS; 
+
+GRANT connect, resource TO cursoplsql;
