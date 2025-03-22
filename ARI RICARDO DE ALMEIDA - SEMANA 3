@@ -1,0 +1,74 @@
+CREATE TABLE Funcionarios (
+    CodigoFuncionario INT PRIMARY KEY,
+    NomeFuncionario VARCHAR(255),
+    Dependente VARCHAR(255),
+    DataNascimento DATE,
+    DataNascDependente DATE,
+    SalarioEmReais DECIMAL(10, 2),
+    Senioridade VARCHAR(50),
+    NomeDepartamento VARCHAR(255),
+    NomeProjeto VARCHAR(255)
+);
+
+-- INSERINDO INFORMAÇÕES NA TABELA FUNCIONÁRIOS --
+
+INSERT INTO Funcionarios (CodigoFuncionario, NomeFuncionario, Dependente, DataNascimento, DataNascDependente, SalarioEmReais, Senioridade, NomeDepartamento, NomeProjeto)
+VALUES
+
+(1, 'Joao Silva', 'Sofia Silva', '10-05-1985', '05-11-2013', 5000, 'Senior', 'TI', 'Projeto Alpha');
+
+
+
+INSERT INTO Funcionarios (CodigoFuncionario, NomeFuncionario, Dependente, DataNascimento, DataNascDependente, SalarioEmReais, Senioridade, NomeDepartamento, NomeProjeto)
+VALUES
+
+(2, 'Mary Gomes', 'Sofy Gomes', '15-05-1988', '05-12-2016', 9000, 'Pleno', 'PO', 'Projeto Beta');
+
+
+INSERT INTO Funcionarios (CodigoFuncionario, NomeFuncionario, Dependente, DataNascimento, DataNascDependente, SalarioEmReais, Senioridade, NomeDepartamento, NomeProjeto)
+VALUES
+
+(3, 'Lucas Stark', 'Tony Stark', '19-05-1981', '07-12-2012', 21000, 'Diretor', 'Diretoria geral', 'Projeto Alpha');
+
+
+INSERT INTO Funcionarios (CodigoFuncionario, NomeFuncionario, Dependente, DataNascimento, DataNascDependente, SalarioEmReais, Senioridade, NomeDepartamento, NomeProjeto)
+VALUES
+
+(4, 'Heitor Barros', 'Thiago Barros', '21-08-1984', '07-03-2015', 2800, 'Junior', 'TI', 'Projeto Gama');
+
+INSERT INTO Funcionarios (CodigoFuncionario, NomeFuncionario, Dependente, DataNascimento, DataNascDependente, SalarioEmReais, Senioridade, NomeDepartamento, NomeProjeto)
+VALUES
+
+(5, 'Zico Santos', 'Thiago Santos', '28-01-1986', '08-04-2017', 5500, 'Pleno', 'RH', 'Projeto Gama');
+
+
+-- CONSULTA DEPENDENTES COM H NO NOME --
+
+SELECT NomeFuncionario, Dependente
+FROM Funcionarios
+WHERE Dependente LIKE '%h%'
+ORDER BY NomeFuncionario, Dependente;
+
+
+
+-- CONSULTA COLABORADOR COM MAIOR SALÁRIO --
+
+SELECT NomeFuncionario, SalarioEmReais
+FROM Funcionarios
+WHERE SalarioEmReais = (
+    SELECT MAX(SalarioEmReais)
+    FROM Funcionarios
+);
+
+
+-- RELATÓRIO DE SENIORIDADE --
+
+SELECT CodigoFuncionario, NomeFuncionario, SalarioEmReais, Senioridade
+FROM Funcionarios;
+
+
+-- RELATÓRIO DE COLABORADORES EM PROJETOS --
+
+SELECT NomeDepartamento, NomeProjeto, COUNT(CodigoFuncionario) AS QuantidadeColaboradores
+FROM Funcionarios
+GROUP BY NomeDepartamento, NomeProjeto;
