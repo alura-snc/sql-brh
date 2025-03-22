@@ -1,0 +1,139 @@
+1---DEPARTAMENTO_N - CRIADO----
+
+CREATE TABLE  DEPARTAMENTO_N (
+  cod_departamento INT NOT NULL,
+  chefia VARCHAR(45) NOT NULL,
+  nome_departamento VARCHAR(95) NULL,
+  departamento_superior  VARCHAR(95) NULL,
+  PRIMARY KEY (cod_departamento));
+  CREATE INDEX DEPARTAMENTO_N on DEPARTAMENTO_N(cod_departamento);
+   
+  2-------CARGO - CRIADO--------------
+  
+  CREATE TABLE CARGO (
+  cod_cargo INT NOT NULL,
+  cod_departamento INT NOT NULL,
+  nome_cargo VARCHAR(100) NULL,
+  salario DECIMAL(10,2) NULL,
+  PRIMARY KEY (cod_cargo),
+    CONSTRAINT fk_CARGO_DEPARTAMENTO1
+    FOREIGN KEY (cod_departamento)
+    REFERENCES DEPARTAMENTO_N (cod_departamento)
+    )
+       
+ 3 -----------COLABORADOR_N CRIADO --------
+CREATE TABLE system.COLABORADOR_N (
+  cod_colaborador INT NOT NULL,
+  cpf VARCHAR(45) NOT NULL,
+  cod_departamento INT NOT NULL,
+  nome VARCHAR(145) NULL,
+  PRIMARY KEY (cod_colaborador),
+    CONSTRAINT fk_COLABORADOR_DEPARTAMENTO
+    FOREIGN KEY (cod_departamento)
+    REFERENCES DEPARTAMENTO_N(cod_departamento)
+   )
+   
+4-----DEPENDENTE---CRIADO-----------------------
+
+CREATE TABLE DEPENDENTE (
+  cod_dependente INT NOT NULL,
+  cod_colaborador INT NOT NULL,
+  nome_dependente VARCHAR(85) NULL,
+  parentesco VARCHAR(45) NULL,
+  data_nascimento DATE NULL,
+  PRIMARY KEY (cod_dependente),  
+  CONSTRAINT fk_DEPENDENTE_COLABORADOR1
+    FOREIGN KEY (cod_colaborador)
+    REFERENCES COLABORADOR_N (cod_colaborador)
+    )
+commit
+5----------TELEFONE_COLABORADOR---CRIADO-----
+
+CREATE TABLE TELEFONE_COLABORADOR (
+  cod_colaborador INT NOT NULL,
+  telefone VARCHAR(15) NOT NULL,
+  tipo VARCHAR(45) NOT NULL,
+  CONSTRAINT fk_TELEFONE_COLABORADOR_COLABORADOR1
+    FOREIGN KEY (cod_colaborador)
+    REFERENCES COLABORADOR_N (cod_colaborador)
+   )
+commit
+
+6----------EMAIL_COLABORADOR CRIADO-----------------------------
+
+CREATE TABLE EMAIL_COLABORADOR (
+  cod_colaborador INT NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  tipo VARCHAR(45) NOT NULL,
+  CONSTRAINT fk_EMAIL_COLABORADOR_COLABORADOR1
+    FOREIGN KEY (cod_colaborador)
+    REFERENCES COLABORADOR_N (cod_colaborador)
+   )
+   commit
+   
+7-------PROJETO----CRIADO---------------
+CREATE TABLE PROJETO (
+  cod_projeto INT NOT NULL,
+  nome_projeto VARCHAR(95) NOT NULL,
+  data_inicio DATE NULL,
+  data_fim DATE NULL,
+  PRIMARY KEY (cod_projeto))
+  
+  commit
+8--------PAPEL---CRIADO--------------------------
+
+CREATE TABLE PAPEL (
+  cod_papel INT NOT NULL,
+  nome_papel VARCHAR(95) NULL,
+  PRIMARY KEY (cod_papel))
+
+9-----------ATRIBUICAO----CRIADO----------
+CREATE TABLE ATRIBUICAO (
+  cod_projeto INT NOT NULL,
+  cod_colaborador INT NOT NULL,
+  cod_papel INT NOT NULL,  
+    PRIMARY KEY (cod_projeto, cod_colaborador, cod_papel),
+  CONSTRAINT fk_ATRIBUICAO_PROJETO1
+    FOREIGN KEY (cod_projeto)
+    REFERENCES PROJETO (cod_projeto),
+  CONSTRAINT fk_ATRIBUICAO_COLABORADOR1
+    FOREIGN KEY (cod_colaborador)
+    REFERENCES COLABORADOR_N (cod_colaborador),    
+  CONSTRAINT fk_ATRIBUICAO_PAPEL1
+    FOREIGN KEY (cod_papel)
+    REFERENCES PAPEL (cod_papel)
+    )
+commit
+
+10-------ATRIBUICAO_SALARIO---CRIADO---------------
+CREATE TABLE ATRIBUICAO_SALARIO (
+  cod_colaborador INT NOT NULL,
+  cod_cargo INT NOT NULL,
+  cod_departamento INT NOT NULL,
+  PRIMARY KEY (cod_colaborador,cod_cargo, cod_departamento ),
+    CONSTRAINT fk_ATRIBUICAO_SALARIO_COLABORADOR1
+    FOREIGN KEY (cod_colaborador)
+    REFERENCES COLABORADOR_N (cod_colaborador),
+  CONSTRAINT fk_ATRIBUICAO_SALARIO_CARGO1
+    FOREIGN KEY (cod_cargo)
+    REFERENCES CARGO (cod_cargo),
+    CONSTRAINT fk_ATRIBUICAO_SALARIO_DEPARTAMENTO1
+    FOREIGN KEY (cod_departamento)
+    REFERENCES DEPARTAMENTO_N (cod_departamento)
+    )
+commit
+11-----ENDERECO_COLABORADOR--CRIADO------------------
+
+CREATE TABLE ENDERECO_COLABORADOR (
+  cep INT NOT NULL,
+  cod_colaborador INT NOT NULL,
+  logradouro VARCHAR(145) NULL,
+  complemento VARCHAR(95) NULL,
+  bairro VARCHAR(95) NULL,
+  estado VARCHAR(2) NULL,
+  PRIMARY KEY (cep),
+   CONSTRAINT fk_ENDERECO_COLABORADOR_COLABORADOR1
+    FOREIGN KEY (cod_colaborador)
+    REFERENCES COLABORADOR_N (cod_colaborador)
+  )
+commit
